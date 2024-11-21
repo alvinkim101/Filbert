@@ -1,7 +1,5 @@
 #include "Application.h"
 
-#include <iostream>
-
 namespace Filbert
 {
 	Application::Application()
@@ -16,6 +14,6 @@ namespace Filbert
 
 	void Application::Run()
 	{
-		std::cout << "Welcome to Filbert Engine!" << std::endl;
+
 	}
 }
