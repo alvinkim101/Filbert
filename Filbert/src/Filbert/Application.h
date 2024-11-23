@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Core.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/MouseEvent.h"
+#include "Events/KeyEvent.h"
 
 namespace Filbert
 {

@@ -6,6 +6,10 @@ add_library(Filbert SHARED
 	src/Filbert/Application.h
 	src/Filbert/Log.cpp
 	src/Filbert/Log.h
+	src/Filbert/Events/ApplicationEvent.h
+	src/Filbert/Events/Event.h
+	src/Filbert/Events/KeyEvent.h
+	src/Filbert/Events/MouseEvent.h
 )
 
 target_include_directories(Filbert PUBLIC src)
