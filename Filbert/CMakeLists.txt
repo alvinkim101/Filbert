@@ -1,3 +1,9 @@
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(vendor/glfw)
+
 add_library(Filbert SHARED
 	src/Filbert.h
 	src/pch.h
@@ -7,14 +13,20 @@ add_library(Filbert SHARED
 	src/Filbert/Application.h
 	src/Filbert/Log.cpp
 	src/Filbert/Log.h
+	src/Filbert/Window.h
 	src/Filbert/Events/ApplicationEvent.h
 	src/Filbert/Events/Event.h
 	src/Filbert/Events/KeyEvent.h
 	src/Filbert/Events/MouseEvent.h
+	src/Platform/Windows/WindowsWindow.cpp
+	src/Platform/Windows/WindowsWindow.h
 )
+
+target_link_libraries(Filbert glfw)
 
 target_include_directories(Filbert PUBLIC src)
 target_include_directories(Filbert PUBLIC vendor/spdlog/include)
+target_include_directories(Filbert PUBLIC vendor/glfw/include)
 
 # TODO: Figure out how to check Visual Studio's platform
 target_compile_definitions(Filbert PUBLIC FB_PLATFORM_WINDOWS)
@@ -25,4 +37,6 @@ target_precompile_headers(Filbert PUBLIC src/pch.h)
 add_custom_command(TARGET Filbert POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_if_different
 	$<TARGET_FILE:Filbert> ${CMAKE_BINARY_DIR}/Sandbox/$<CONFIG>/$<TARGET_FILE_NAME:Filbert>
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	$<TARGET_FILE:glfw> $<TARGET_FILE_DIR:Filbert>
 )

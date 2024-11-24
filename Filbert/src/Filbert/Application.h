@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core.h"
+#include "Window.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/MouseEvent.h"
 #include "Events/KeyEvent.h"
@@ -14,6 +15,9 @@ namespace Filbert
 		virtual ~Application();
 
 		void Run();
+	private:
+		std::unique_ptr<Window> m_window{ Window::Create() };
+		bool m_running = true;
 	};
 
 	// To be defined in the client
