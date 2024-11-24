@@ -14,7 +14,9 @@ namespace Filbert
 
 	void Application::Run()
 	{
-		auto event = WindowResizeEvent(1920, 1080);
-		FB_INFO(event.Info());
+		while (m_running)
+		{
+			m_window->OnUpdate();
+		}
 	}
 }
