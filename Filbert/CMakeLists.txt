@@ -1,5 +1,6 @@
 add_library(Filbert SHARED
 	src/Filbert.h
+	src/pch.h
 	src/Filbert/Core.h
 	src/Filbert/EntryPoint.h
 	src/Filbert/Application.cpp
@@ -18,6 +19,8 @@ target_include_directories(Filbert PUBLIC vendor/spdlog/include)
 # TODO: Figure out how to check Visual Studio's platform
 target_compile_definitions(Filbert PUBLIC FB_PLATFORM_WINDOWS)
 target_compile_definitions(Filbert PRIVATE FB_BUILD_DLL)
+
+target_precompile_headers(Filbert PUBLIC src/pch.h)
 
 add_custom_command(TARGET Filbert POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_if_different
