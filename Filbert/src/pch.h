@@ -5,6 +5,7 @@
 #endif
 
 #include <functional>
+#include <memory>
 #include <string>
 
 #include "Filbert/Log.h"
