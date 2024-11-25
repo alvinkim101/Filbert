@@ -15,7 +15,12 @@ namespace Filbert
 		virtual ~Application();
 
 		void Run();
+
+		void OnEvent(Event& event);
+
 	private:
+		bool OnWindowCloseEvent(WindowCloseEvent& event);
+
 		std::unique_ptr<Window> m_window{ Window::Create() };
 		bool m_running = true;
 	};
