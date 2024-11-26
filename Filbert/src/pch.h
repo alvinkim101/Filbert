@@ -6,6 +6,7 @@
 
 #include <functional>
 #include <memory>
+#include <ranges>
 #include <string>
 
 #include "Filbert/Log.h"
