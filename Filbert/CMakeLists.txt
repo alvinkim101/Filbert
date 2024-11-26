@@ -3,6 +3,7 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(vendor/glfw)
+add_subdirectory(vendor/glad)
 
 add_library(Filbert SHARED
 	src/Filbert.h
@@ -26,10 +27,12 @@ add_library(Filbert SHARED
 )
 
 target_link_libraries(Filbert glfw)
+target_link_libraries(Filbert glad)
 
 target_include_directories(Filbert PUBLIC src)
 target_include_directories(Filbert PUBLIC vendor/spdlog/include)
 target_include_directories(Filbert PUBLIC vendor/glfw/include)
+target_include_directories(Filbert PUBLIC vendor/glad/include)
 
 target_compile_definitions(Filbert PUBLIC $<$<PLATFORM_ID:Windows>:FB_PLATFORM_WINDOWS>)
 target_compile_definitions(Filbert PUBLIC $<$<CONFIG:Debug>:FB_ASSERTS_ENABLED>)
@@ -42,4 +45,6 @@ add_custom_command(TARGET Filbert POST_BUILD
 	$<TARGET_FILE:Filbert> ${CMAKE_BINARY_DIR}/Sandbox/$<CONFIG>/$<TARGET_FILE_NAME:Filbert>
 	COMMAND ${CMAKE_COMMAND} -E copy_if_different
 	$<TARGET_FILE:glfw> $<TARGET_FILE_DIR:Filbert>
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	$<TARGET_FILE:glad> $<TARGET_FILE_DIR:Filbert>
 )
