@@ -3,6 +3,7 @@
 #include "Filbert/Events/MouseEvent.h"
 #include "Filbert/Events/KeyEvent.h"
 
+#include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
 namespace Filbert
@@ -61,6 +62,10 @@ namespace Filbert
 
 		m_window = glfwCreateWindow(m_data.width, m_data.height, m_data.title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_window);
+
+		int version = gladLoadGL(glfwGetProcAddress);
+		FB_CORE_ASSERT(version, "gladLoadGL failed");
+
 		glfwSetWindowUserPointer(m_window, &m_data);
 		SetVSync(true);
 
