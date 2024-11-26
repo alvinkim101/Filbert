@@ -11,6 +11,9 @@ add_library(Filbert SHARED
 	src/Filbert/EntryPoint.h
 	src/Filbert/Application.cpp
 	src/Filbert/Application.h
+	src/Filbert/Layer.h
+	src/Filbert/LayerStack.cpp
+	src/Filbert/LayerStack.h
 	src/Filbert/Log.cpp
 	src/Filbert/Log.h
 	src/Filbert/Window.h

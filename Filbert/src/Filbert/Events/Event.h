@@ -33,8 +33,6 @@ namespace Filbert
 
 	class FILBERT_API Event
 	{
-		friend class EventDispatcher;
-
 	public:
 		virtual const char* GetName() const = 0;
 		virtual constexpr EventType GetType() const = 0;
@@ -47,8 +45,7 @@ namespace Filbert
 			return GetCategories() & category;
 		}
 
-	protected:
-		bool m_handled = false;
+		bool handled = false;
 	};
 
 	class FILBERT_API EventDispatcher
@@ -64,7 +61,7 @@ namespace Filbert
 		{
 			if (m_event.GetType() == T::GetTypeStatic())
 			{
-				m_event.m_handled = f(dynamic_cast<T&>(m_event));
+				m_event.handled = f(dynamic_cast<T&>(m_event));
 				return true;
 			}
 

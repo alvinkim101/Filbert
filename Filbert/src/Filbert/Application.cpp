@@ -18,6 +18,11 @@ namespace Filbert
 	{
 		while (m_running)
 		{
+			for (Layer* layer : m_layerStack)
+			{
+				layer->OnUpdate();
+			}
+
 			m_window->OnUpdate();
 		}
 	}
@@ -27,7 +32,39 @@ namespace Filbert
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowCloseEvent));
 
-		FB_CORE_TRACE("{}", event.Info());
+		for (Layer* layer : std::ranges::reverse_view(m_layerStack))
+		{
+			layer->OnEvent(event);
+
+			if (event.handled)
+			{
+				break;
+			}
+		}
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		m_layerStack.PushLayer(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PopLayer(Layer* layer)
+	{
+		m_layerStack.PopLayer(layer);
+		layer->OnDetach();
+	}
+
+	void Application::PushOverlay(Layer* overlay)
+	{
+		m_layerStack.PushOverlay(overlay);
+		overlay->OnAttach();
+	}
+
+	void Application::PopOverlay(Layer* overlay)
+	{
+		m_layerStack.PopOverlay(overlay);
+		overlay->OnDetach();
 	}
 
 	bool Application::OnWindowCloseEvent(WindowCloseEvent& event)
