@@ -14,6 +14,7 @@ namespace Filbert
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
 		virtual void OnUpdate() {}
+		virtual void OnRender() {}
 		virtual void OnEvent(Event& event) {}
 
 		inline const std::string& GetDebugName() const { return m_debugName; }

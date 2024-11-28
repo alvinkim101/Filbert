@@ -52,7 +52,10 @@ namespace Filbert
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		ImGui::ShowDemoWindow(); // Show demo window! :)
+	}
 
+	void ImGuiLayer::OnRender()
+	{
 		// Rendering
 		// (Your code clears your framebuffer, renders your other stuff etc.)
 		ImGui::Render();

@@ -12,7 +12,9 @@ namespace Filbert
 		WindowsWindow(const WindowProps& props);
 		~WindowsWindow() override;
 
-		void OnUpdate() override;
+		void ProcessInput() override;
+		void Clear() override;
+		void SwapBuffers() override;
 
 		void SetEventCallback(const EventCallbackFn& callback) override { m_data.callback = callback; }
 		void SetVSync(bool enabled) override;

@@ -29,6 +29,10 @@ namespace Filbert
 		static Application& GetApplication() { FB_ASSERT(s_application, "Application not initialized"); return *s_application; }
 
 	private:
+		inline void ProcessInput();
+		inline void Update();
+		inline void Render();
+
 		bool OnWindowCloseEvent(WindowCloseEvent& event);
 
 		static Application* s_application;

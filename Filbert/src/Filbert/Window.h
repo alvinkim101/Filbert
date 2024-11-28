@@ -22,7 +22,9 @@ namespace Filbert
 
 		virtual ~Window() = 0 {};
 
-		virtual void OnUpdate() = 0; 
+		virtual void ProcessInput() = 0;
+		virtual void Clear() = 0;
+		virtual void SwapBuffers() = 0;
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
 		virtual void SetVSync(bool enabled) = 0;

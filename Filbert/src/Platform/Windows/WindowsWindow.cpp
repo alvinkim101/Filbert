@@ -33,9 +33,18 @@ namespace Filbert
 		Shutdown();
 	}
 
-	void WindowsWindow::OnUpdate()
+	void WindowsWindow::ProcessInput()
 	{
 		glfwPollEvents();
+	}
+
+	void WindowsWindow::Clear()
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	void WindowsWindow::SwapBuffers()
+	{
 		glfwSwapBuffers(m_window);
 	}
 

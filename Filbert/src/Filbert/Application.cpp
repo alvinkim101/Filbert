@@ -22,13 +22,35 @@ namespace Filbert
 	{
 		while (m_running)
 		{
-			for (Layer* layer : m_layerStack)
-			{
-				layer->OnUpdate();
-			}
-
-			m_window->OnUpdate();
+			ProcessInput();
+			Update();
+			Render();
 		}
+	}
+
+	void Application::ProcessInput()
+	{
+		m_window->ProcessInput();
+	}
+
+	void Application::Update()
+	{
+		for (Layer* layer : m_layerStack)
+		{
+			layer->OnUpdate();
+		}
+	}
+
+	void Application::Render()
+	{
+		m_window->Clear();
+
+		for (Layer* layer : m_layerStack)
+		{
+			layer->OnRender();
+		}
+
+		m_window->SwapBuffers();
 	}
 
 	void Application::OnEvent(Event& event)
