@@ -4,8 +4,12 @@ namespace Filbert
 {
 	#define BIND_EVENT_FN(f) std::bind(&Application::f, this, std::placeholders::_1)
 
+	Application* Application::s_application = nullptr;
+
 	Application::Application()
 	{
+		FB_ASSERT(!s_application, "More than one application created");
+		s_application = this;
 		m_window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
 

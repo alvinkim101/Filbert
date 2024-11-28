@@ -21,6 +21,8 @@ namespace Filbert
 		unsigned int GetWidth() const override { return m_data.width; }
 		unsigned int GetHeight() const override { return m_data.height; }
 
+		GLFWwindow* GetWindow() const { return m_window; }
+
 	private:
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();

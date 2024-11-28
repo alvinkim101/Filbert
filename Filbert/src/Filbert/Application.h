@@ -24,9 +24,14 @@ namespace Filbert
 		void PushOverlay(Layer* overlay);
 		void PopOverlay(Layer* overlay);
 
+		Window& GetWindow() { return *m_window; }
+
+		static Application& GetApplication() { FB_ASSERT(s_application, "Application not initialized"); return *s_application; }
+
 	private:
 		bool OnWindowCloseEvent(WindowCloseEvent& event);
 
+		static Application* s_application;
 		std::unique_ptr<Window> m_window{ Window::Create() };
 		LayerStack m_layerStack;
 		bool m_running = true;
