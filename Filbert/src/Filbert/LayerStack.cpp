@@ -12,6 +12,7 @@ namespace Filbert
 	{
 		for (Layer* layer : m_joinedLayers)
 		{
+			layer->OnDetach();
 			delete layer;
 		}
 	}
@@ -19,6 +20,7 @@ namespace Filbert
 	void LayerStack::PushLayer(Layer* layer)
 	{
 		m_layers[Layers].push_back(layer);
+		layer->OnAttach();
 	}
 
 	void LayerStack::PopLayer(Layer* layer)
@@ -28,12 +30,14 @@ namespace Filbert
 		if (i != m_layers[Layers].end())
 		{
 			m_layers[Layers].erase(i);
+			layer->OnDetach();
 		}
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay)
 	{
 		m_layers[Overlays].push_back(overlay);
+		overlay->OnAttach();
 	}
 
 	void LayerStack::PopOverlay(Layer* overlay)
@@ -43,6 +47,7 @@ namespace Filbert
 		if (i != m_layers[Overlays].end())
 		{
 			m_layers[Overlays].erase(i);
+			overlay->OnDetach();
 		}
 	}
 }

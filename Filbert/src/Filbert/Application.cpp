@@ -4,8 +4,12 @@ namespace Filbert
 {
 	#define BIND_EVENT_FN(f) std::bind(&Application::f, this, std::placeholders::_1)
 
+	Application* Application::s_application = nullptr;
+
 	Application::Application()
 	{
+		FB_ASSERT(!s_application, "More than one application created");
+		s_application = this;
 		m_window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
 
@@ -46,25 +50,21 @@ namespace Filbert
 	void Application::PushLayer(Layer* layer)
 	{
 		m_layerStack.PushLayer(layer);
-		layer->OnAttach();
 	}
 
 	void Application::PopLayer(Layer* layer)
 	{
 		m_layerStack.PopLayer(layer);
-		layer->OnDetach();
 	}
 
 	void Application::PushOverlay(Layer* overlay)
 	{
 		m_layerStack.PushOverlay(overlay);
-		overlay->OnAttach();
 	}
 
 	void Application::PopOverlay(Layer* overlay)
 	{
 		m_layerStack.PopOverlay(overlay);
-		overlay->OnDetach();
 	}
 
 	bool Application::OnWindowCloseEvent(WindowCloseEvent& event)
