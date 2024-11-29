@@ -13,6 +13,7 @@ add_library(Filbert SHARED
 	src/Filbert/EntryPoint.h
 	src/Filbert/Application.cpp
 	src/Filbert/Application.h
+	src/Filbert/Input.h
 	src/Filbert/Layer.h
 	src/Filbert/LayerStack.cpp
 	src/Filbert/LayerStack.h
@@ -25,6 +26,8 @@ add_library(Filbert SHARED
 	src/Filbert/Events/MouseEvent.h
 	src/Filbert/ImGui/ImGuiLayer.cpp
 	src/Filbert/ImGui/ImGuiLayer.h
+	src/Platform/Windows/WindowsInput.cpp
+	src/Platform/Windows/WindowsInput.h
 	src/Platform/Windows/WindowsWindow.cpp
 	src/Platform/Windows/WindowsWindow.h
 )
