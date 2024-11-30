@@ -10,7 +10,10 @@ public:
 
 	void OnUpdate() override
 	{
-
+		if (Filbert::Input::IsKeyPressed(FB_KEY_F))
+		{
+			FB_TRACE("Pay Respects");
+		}
 	}
 
 	void OnEvent(Filbert::Event& event) override

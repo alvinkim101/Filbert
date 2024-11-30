@@ -14,11 +14,13 @@ add_library(Filbert SHARED
 	src/Filbert/Application.cpp
 	src/Filbert/Application.h
 	src/Filbert/Input.h
+	src/Filbert/KeyCodes.h
 	src/Filbert/Layer.h
 	src/Filbert/LayerStack.cpp
 	src/Filbert/LayerStack.h
 	src/Filbert/Log.cpp
 	src/Filbert/Log.h
+	src/Filbert/MouseButtonCodes.h
 	src/Filbert/Window.h
 	src/Filbert/Events/ApplicationEvent.h
 	src/Filbert/Events/Event.h
