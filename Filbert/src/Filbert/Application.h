@@ -26,7 +26,7 @@ namespace Filbert
 
 		Window& GetWindow() { return *m_window; }
 
-		static Application& GetApplication() { FB_ASSERT(s_application, "Application not initialized"); return *s_application; }
+		static Application& GetApplication() { FB_CORE_ASSERT(s_application, "Application not initialized"); return *s_application; }
 
 	private:
 		inline void ProcessInput();

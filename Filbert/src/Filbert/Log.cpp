@@ -26,6 +26,6 @@ namespace Filbert
 		spdlog::set_level(level);
 
 		s_coreLogger = spdlog::stdout_color_mt("FILBERT");
-		s_clientLogger = spdlog::stdout_color_mt("APP");
+		s_clientLogger = spdlog::stdout_color_mt("CLIENT");
 	}
 }

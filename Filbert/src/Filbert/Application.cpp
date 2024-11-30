@@ -8,7 +8,7 @@ namespace Filbert
 
 	Application::Application()
 	{
-		FB_ASSERT(!s_application, "More than one application created");
+		FB_CORE_ASSERT(!s_application, "More than one application created");
 		s_application = this;
 		m_window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
