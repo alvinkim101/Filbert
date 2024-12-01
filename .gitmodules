@@ -7,3 +7,6 @@
 [submodule "Filbert/vendor/imgui/imgui"]
 	path = Filbert/vendor/imgui/imgui
 	url = https://github.com/ocornut/imgui.git
+[submodule "Filbert/vendor/glm"]
+	path = Filbert/vendor/glm
+	url = https://github.com/g-truc/glm.git

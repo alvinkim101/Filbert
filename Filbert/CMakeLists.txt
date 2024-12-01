@@ -43,6 +43,7 @@ target_include_directories(Filbert PUBLIC vendor/spdlog/include)
 target_include_directories(Filbert PUBLIC vendor/glfw/include)
 target_include_directories(Filbert PUBLIC vendor/glad/include)
 target_include_directories(Filbert PUBLIC vendor/imgui/imgui vendor/imgui/imgui/backends vendor/imgui/imgui/misc/cpp)
+target_include_directories(Filbert PUBLIC vendor/glm)
 
 target_compile_definitions(Filbert PUBLIC $<$<PLATFORM_ID:Windows>:FB_PLATFORM_WINDOWS>)
 target_compile_definitions(Filbert PUBLIC $<$<CONFIG:Debug>:FB_ASSERTS_ENABLED>)
