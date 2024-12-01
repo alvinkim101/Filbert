@@ -16,6 +16,9 @@ namespace Filbert
 		void OnRender() override;
 		void OnEvent(Event& event) override;
 
+		void Begin();
+		void End();
+
 	private:
 
 	};
