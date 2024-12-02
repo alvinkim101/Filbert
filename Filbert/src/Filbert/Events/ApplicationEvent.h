@@ -4,47 +4,47 @@
 
 namespace Filbert
 {
-	class FILBERT_API ApplicationTickEvent : public Event
+	class ApplicationTickEvent : public Event
 	{
 	public:
 		EVENT_CLASS_NAME_AND_TYPE(ApplicationTick)
 		EVENT_CLASS_CATEGORIES(EventCategoryApplication)
 	};
 
-	class FILBERT_API ApplicationUpdateEvent : public Event
+	class ApplicationUpdateEvent : public Event
 	{
 		EVENT_CLASS_NAME_AND_TYPE(ApplicationUpdate)
 		EVENT_CLASS_CATEGORIES(EventCategoryApplication)
 	};
 
-	class FILBERT_API ApplicationRenderEvent : public Event
+	class ApplicationRenderEvent : public Event
 	{
 		EVENT_CLASS_NAME_AND_TYPE(ApplicationRender)
 		EVENT_CLASS_CATEGORIES(EventCategoryApplication)
 	};
 
-	class FILBERT_API WindowCloseEvent : public Event
+	class WindowCloseEvent : public Event
 	{
 	public:
 		EVENT_CLASS_NAME_AND_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORIES(EventCategoryApplication)
 	};
 
-	class FILBERT_API WindowFocusEvent : public Event
+	class WindowFocusEvent : public Event
 	{
 	public:
 		EVENT_CLASS_NAME_AND_TYPE(WindowFocus)
 		EVENT_CLASS_CATEGORIES(EventCategoryApplication)
 	};
 
-	class FILBERT_API WindowUnfocusEvent : public Event
+	class WindowUnfocusEvent : public Event
 	{
 	public:
 		EVENT_CLASS_NAME_AND_TYPE(WindowUnfocus)
 		EVENT_CLASS_CATEGORIES(EventCategoryApplication)
 	};
 
-	class FILBERT_API WindowResizeEvent : public Event
+	class WindowResizeEvent : public Event
 	{
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height) : m_width(width), m_height(height) {}
@@ -69,7 +69,7 @@ namespace Filbert
 		unsigned int m_width = 0, m_height = 0;
 	};
 
-	class FILBERT_API WindowMoveEvent : public Event
+	class WindowMoveEvent : public Event
 	{
 	public:
 		WindowMoveEvent(float x, float y) : m_x(x), m_y(y) {}

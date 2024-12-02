@@ -31,7 +31,7 @@ namespace Filbert
 #define EVENT_CLASS_CATEGORIES(categories) constexpr int GetCategories() const override { return GetCategoriesStatic(); } \
 										   static constexpr int GetCategoriesStatic() { return categories; }
 
-	class FILBERT_API Event
+	class Event
 	{
 	public:
 		virtual const char* GetName() const = 0;
@@ -48,7 +48,7 @@ namespace Filbert
 		bool handled = false;
 	};
 
-	class FILBERT_API EventDispatcher
+	class EventDispatcher
 	{
 		template <typename T>
 		using EventFn = std::function<bool(T&)>;

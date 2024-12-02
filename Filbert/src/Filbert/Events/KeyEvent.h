@@ -4,7 +4,7 @@
 
 namespace Filbert
 {
-	class FILBERT_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		int GetKeyCode() const { return m_keyCode; }
@@ -17,7 +17,7 @@ namespace Filbert
 		int m_keyCode = 0;
 	};
 
-	class FILBERT_API KeyPressEvent : public KeyEvent
+	class KeyPressEvent : public KeyEvent
 	{
 	public:
 		KeyPressEvent(int keyCode, bool repeated) : KeyEvent(keyCode), m_repeated(repeated) {}
@@ -37,7 +37,7 @@ namespace Filbert
 		bool m_repeated = false;
 	};
 
-	class FILBERT_API KeyReleaseEvent : public KeyEvent
+	class KeyReleaseEvent : public KeyEvent
 	{
 	public:
 		KeyReleaseEvent(int keyCode) : KeyEvent(keyCode) {}

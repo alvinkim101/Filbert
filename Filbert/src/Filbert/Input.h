@@ -4,7 +4,7 @@
 
 namespace Filbert
 {
-	class FILBERT_API Input
+	class Input
 	{
 	public:
 		static bool IsKeyPressed(int key) { return s_input->IsKeyPressedImpl(key); }

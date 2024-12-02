@@ -6,7 +6,7 @@ add_subdirectory(vendor/glfw)
 add_subdirectory(vendor/glad)
 add_subdirectory(vendor/imgui)
 
-add_library(Filbert SHARED
+add_library(Filbert STATIC
 	src/Filbert.h
 	src/pch.h
 	src/Filbert/Core.h
@@ -47,11 +47,5 @@ target_include_directories(Filbert PUBLIC vendor/glm)
 
 target_compile_definitions(Filbert PUBLIC $<$<PLATFORM_ID:Windows>:FB_PLATFORM_WINDOWS>)
 target_compile_definitions(Filbert PUBLIC $<$<CONFIG:Debug>:FB_ASSERTS_ENABLED>)
-target_compile_definitions(Filbert PRIVATE FB_BUILD_DLL)
 
 target_precompile_headers(Filbert PUBLIC src/pch.h)
-
-add_custom_command(TARGET Filbert POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_if_different
-	$<TARGET_FILE:Filbert> ${CMAKE_BINARY_DIR}/Sandbox/$<CONFIG>/$<TARGET_FILE_NAME:Filbert>
-)

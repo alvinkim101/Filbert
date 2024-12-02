@@ -5,7 +5,7 @@
 
 namespace Filbert
 {
-	class FILBERT_API Layer
+	class Layer
 	{
 	public:
 		Layer(const std::string& debugName = "Layer") : m_debugName(debugName) {};

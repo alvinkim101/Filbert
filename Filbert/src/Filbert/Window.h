@@ -15,7 +15,7 @@ namespace Filbert
 			: title(title), width(width), height(height) {}
 	};
 
-	class FILBERT_API Window
+	class Window
 	{
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;

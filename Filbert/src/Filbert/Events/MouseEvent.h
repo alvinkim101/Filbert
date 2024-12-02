@@ -4,7 +4,7 @@
 
 namespace Filbert
 {
-	class FILBERT_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		int GetMouseButtonCode() const { return m_mouseButtonCode; }
@@ -17,7 +17,7 @@ namespace Filbert
 		int m_mouseButtonCode = 0;
 	};
 
-	class FILBERT_API MouseButtonPressEvent : public MouseButtonEvent
+	class MouseButtonPressEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressEvent(int mouseButtonCode) : MouseButtonEvent(mouseButtonCode) {}
@@ -34,7 +34,7 @@ namespace Filbert
 		}
 	};
 
-	class FILBERT_API MouseButtonReleaseEvent : public MouseButtonEvent
+	class MouseButtonReleaseEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleaseEvent(int mouseButtonCode) : MouseButtonEvent(mouseButtonCode) {}
@@ -51,7 +51,7 @@ namespace Filbert
 		}
 	};
 
-	class FILBERT_API MouseMoveEvent : public Event
+	class MouseMoveEvent : public Event
 	{
 	public:
 		MouseMoveEvent(float x, float y) : m_x(x), m_y(y) {}
@@ -76,7 +76,7 @@ namespace Filbert
 		float m_x = 0.0f, m_y = 0.0f;
 	};
 
-	class FILBERT_API MouseScrollEvent : public Event
+	class MouseScrollEvent : public Event
 	{
 	public:
 		MouseScrollEvent(float x, float y) : m_x(x), m_y(y) {}

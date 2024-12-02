@@ -6,7 +6,7 @@
 
 namespace Filbert
 {
-	class FILBERT_API Log
+	class Log
 	{
 	public:
 		Log();
