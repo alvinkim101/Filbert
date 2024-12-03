@@ -123,7 +123,7 @@ namespace Filbert
 			{
 				WindowData* windowData = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
-				WindowMoveEvent e(xpos, ypos);
+				WindowMoveEvent e(static_cast<float>(xpos), static_cast<float>(ypos));
 				windowData->callback(e);
 			}
 		);
@@ -188,7 +188,7 @@ namespace Filbert
 			{
 				WindowData* windowData = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
-				MouseMoveEvent e(xpos, ypos);
+				MouseMoveEvent e(static_cast<float>(xpos), static_cast<float>(ypos));
 				windowData->callback(e);
 			}
 		);
@@ -197,7 +197,7 @@ namespace Filbert
 			{
 				WindowData* windowData = static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 
-				MouseScrollEvent e(xoffset, yoffset);
+				MouseScrollEvent e(static_cast<float>(xoffset), static_cast<float>(yoffset));
 				windowData->callback(e);
 			}
 		);
