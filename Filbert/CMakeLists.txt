@@ -28,6 +28,30 @@ add_library(Filbert STATIC
 	src/Filbert/Events/MouseEvent.h
 	src/Filbert/ImGui/ImGuiLayer.cpp
 	src/Filbert/ImGui/ImGuiLayer.h
+	src/Filbert/Renderer/Buffer.cpp
+	src/Filbert/Renderer/Buffer.h
+	src/Filbert/Renderer/Context.cpp
+	src/Filbert/Renderer/Context.h
+	src/Filbert/Renderer/RenderCommand.cpp
+	src/Filbert/Renderer/RenderCommand.h
+	src/Filbert/Renderer/Renderer.cpp
+	src/Filbert/Renderer/Renderer.h
+	src/Filbert/Renderer/RendererAPI.cpp
+	src/Filbert/Renderer/RendererAPI.h
+	src/Filbert/Renderer/Shader.cpp
+	src/Filbert/Renderer/Shader.h
+	src/Filbert/Renderer/VertexArray.cpp
+	src/Filbert/Renderer/VertexArray.h
+	src/Platform/OpenGL/OpenGLBuffer.cpp
+	src/Platform/OpenGL/OpenGLBuffer.h
+	src/Platform/OpenGL/OpenGLContext.cpp
+	src/Platform/OpenGL/OpenGLContext.h
+	src/Platform/OpenGL/OpenGLRendererAPI.cpp
+	src/Platform/OpenGL/OpenGLRendererAPI.h
+	src/Platform/OpenGL/OpenGLShader.cpp
+	src/Platform/OpenGL/OpenGLShader.h
+	src/Platform/OpenGL/OpenGLVertexArray.cpp
+	src/Platform/OpenGL/OpenGLVertexArray.h
 	src/Platform/Windows/WindowsInput.cpp
 	src/Platform/Windows/WindowsInput.h
 	src/Platform/Windows/WindowsWindow.cpp

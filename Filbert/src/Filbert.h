@@ -11,5 +11,10 @@
 #include "Filbert/KeyCodes.h"
 #include "Filbert/MouseButtonCodes.h"
 
+#include <Filbert/Renderer/Buffer.h>
+#include <Filbert/Renderer/VertexArray.h>
+#include <Filbert/Renderer/Shader.h>
+#include <Filbert/Renderer/Renderer.h>
+
 // Entry point
 #include "Filbert/EntryPoint.h"
