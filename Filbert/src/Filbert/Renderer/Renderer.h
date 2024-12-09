@@ -1,19 +1,18 @@
 #pragma once
 
+#include "RenderCommand.h"
+#include "Shader.h"
+
 namespace Filbert
 {
-	enum class RendererAPI
-	{
-		None,
-		OpenGL
-	};
-
 	class Renderer
 	{
 	public:
-		static RendererAPI GetAPI() { return s_api; }
+		static void BeginScene();
+		static void EndScene();
 
-	private:
-		static RendererAPI s_api;
+		static void Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray);
+
+		static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	};
 }

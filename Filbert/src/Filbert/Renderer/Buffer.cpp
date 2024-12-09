@@ -8,7 +8,7 @@ namespace Filbert
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLVertexBuffer(data, size);
 
 		default:
@@ -21,7 +21,7 @@ namespace Filbert
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLElementBuffer(indices, size);
 
 		default:

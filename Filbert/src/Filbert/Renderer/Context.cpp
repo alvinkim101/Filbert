@@ -8,7 +8,7 @@ namespace Filbert
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 			return new OpenGLContext(static_cast<GLFWwindow*>(window));
 
 		default:

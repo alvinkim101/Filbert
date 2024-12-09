@@ -32,8 +32,12 @@ add_library(Filbert STATIC
 	src/Filbert/Renderer/Buffer.h
 	src/Filbert/Renderer/Context.cpp
 	src/Filbert/Renderer/Context.h
+	src/Filbert/Renderer/RenderCommand.cpp
+	src/Filbert/Renderer/RenderCommand.h
 	src/Filbert/Renderer/Renderer.cpp
 	src/Filbert/Renderer/Renderer.h
+	src/Filbert/Renderer/RendererAPI.cpp
+	src/Filbert/Renderer/RendererAPI.h
 	src/Filbert/Renderer/Shader.cpp
 	src/Filbert/Renderer/Shader.h
 	src/Filbert/Renderer/VertexArray.cpp
@@ -42,6 +46,8 @@ add_library(Filbert STATIC
 	src/Platform/OpenGL/OpenGLBuffer.h
 	src/Platform/OpenGL/OpenGLContext.cpp
 	src/Platform/OpenGL/OpenGLContext.h
+	src/Platform/OpenGL/OpenGLRendererAPI.cpp
+	src/Platform/OpenGL/OpenGLRendererAPI.h
 	src/Platform/OpenGL/OpenGLShader.cpp
 	src/Platform/OpenGL/OpenGLShader.h
 	src/Platform/OpenGL/OpenGLVertexArray.cpp

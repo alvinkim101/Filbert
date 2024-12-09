@@ -3,8 +3,8 @@
 #include <Filbert/Renderer/Buffer.h>
 #include <Filbert/Renderer/Shader.h>
 #include <Filbert/Renderer/VertexArray.h>
+#include <Filbert/Renderer/Renderer.h>
 
-#include <glad/gl.h>
 #include <glm/vec3.hpp>
 
 class ExampleLayer : public Filbert::Layer
@@ -87,9 +87,9 @@ public:
 
 	void OnRender() override
 	{
-		m_shader->Bind();
-		m_vertexArray->Bind();
-		glDrawElements(GL_TRIANGLES, m_vertexArray->GetElementBuffer()->GetCount(), GL_UNSIGNED_INT, 0);
+		Filbert::Renderer::BeginScene();
+		Filbert::Renderer::Submit(m_shader, m_vertexArray);
+		Filbert::Renderer::EndScene();
 	}
 
 	void OnEvent(Filbert::Event& event) override
