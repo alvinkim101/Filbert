@@ -15,6 +15,7 @@
 #include <Filbert/Renderer/VertexArray.h>
 #include <Filbert/Renderer/Shader.h>
 #include <Filbert/Renderer/Renderer.h>
+#include <Filbert/Renderer/Camera.h>
 
 // Entry point
 #include "Filbert/EntryPoint.h"

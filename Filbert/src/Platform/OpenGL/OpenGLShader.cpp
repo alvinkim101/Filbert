@@ -1,6 +1,7 @@
 #include "OpenGLShader.h"
 
 #include <glad/gl.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Filbert
 {
@@ -126,5 +127,11 @@ namespace Filbert
 	void OpenGLShader::Unbind() const
 	{
 		glUseProgram(0);
+	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, const glm::mat4& matrix)
+	{
+		auto uniform = glGetUniformLocation(m_program, name.c_str());
+		glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 }

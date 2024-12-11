@@ -1,5 +1,7 @@
 #include <Filbert.h>
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 #include <glm/vec3.hpp>
 
 class ExampleLayer : public Filbert::Layer
@@ -34,6 +36,8 @@ public:
 		std::string vertexSource = R"(
 			#version 460 core
 
+			uniform mat4 viewProjection;
+
 			layout (location = 0) in vec3 aPosition;
 			layout (location = 1) in vec3 aColor;
 			
@@ -41,7 +45,8 @@ public:
 
 			void main()
 			{
-				gl_Position = vec4(aPosition, 1.0f);
+				mat4 modelViewProjection = viewProjection ; // * model
+				gl_Position = modelViewProjection * vec4(aPosition, 1.0f);
 				bColor = aColor;
 			}
 		)";
@@ -74,27 +79,45 @@ public:
 
 	void OnUpdate() override
 	{
-		if (Filbert::Input::IsKeyPressed(FB_KEY_F))
+		if (Filbert::Input::IsKeyPressed(FB_KEY_W))
 		{
-			FB_TRACE("Pay Respects");
+			m_camera.Translate(glm::vec3(0, 0, 0.1f));
 		}
+
+		if (Filbert::Input::IsKeyPressed(FB_KEY_S))
+		{
+			m_camera.Translate(glm::vec3(0, 0, -0.1f));
+		}
+
+		if (Filbert::Input::IsKeyPressed(FB_KEY_A))
+		{
+			m_camera.Translate(glm::vec3(-0.1f, 0, 0));
+		}
+
+		if (Filbert::Input::IsKeyPressed(FB_KEY_D))
+		{
+			m_camera.Translate(glm::vec3(0.1f, 0, 0));
+		}
+
+		FB_INFO("{}", glm::to_string(m_camera.GetPosition()));
 	}
 
 	void OnRender() override
 	{
-		Filbert::Renderer::BeginScene();
-		Filbert::Renderer::Submit(m_shader, m_vertexArray);
+		Filbert::Renderer::BeginScene(m_camera);
+		Filbert::Renderer::Submit(m_shader, m_vertexArray, "viewProjection");
 		Filbert::Renderer::EndScene();
 	}
 
 	void OnEvent(Filbert::Event& event) override
 	{
-		FB_TRACE("{} - {}", m_debugName, event.Info());
+
 	}
 
 private:
 	std::shared_ptr<Filbert::VertexArray> m_vertexArray;
 	std::shared_ptr<Filbert::Shader> m_shader;
+	Filbert::PerspectiveCamera m_camera;
 };
 
 class Sandbox : public Filbert::Application

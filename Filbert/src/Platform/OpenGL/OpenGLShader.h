@@ -10,8 +10,11 @@ namespace Filbert
 		OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource); // Not using std::string_view because C string is required
 		~OpenGLShader() override;
 
+		unsigned int GetID() const override { return m_program; }
 		void Bind() const override;
 		void Unbind() const override;
+
+		void UploadUniform(const std::string& name, const glm::mat4& matrix);
 
 	private:
 		unsigned int m_program = 0;

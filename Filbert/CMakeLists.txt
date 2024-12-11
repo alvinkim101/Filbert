@@ -30,6 +30,8 @@ add_library(Filbert STATIC
 	src/Filbert/ImGui/ImGuiLayer.h
 	src/Filbert/Renderer/Buffer.cpp
 	src/Filbert/Renderer/Buffer.h
+	src/Filbert/Renderer/Camera.cpp
+	src/Filbert/Renderer/Camera.h
 	src/Filbert/Renderer/Context.cpp
 	src/Filbert/Renderer/Context.h
 	src/Filbert/Renderer/RenderCommand.cpp
