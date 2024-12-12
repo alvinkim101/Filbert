@@ -35,9 +35,13 @@ namespace Filbert
 
 	void Application::Update()
 	{
+		float currentTime = m_window->GetTime();
+		float deltaTime = currentTime - m_previousUpdateTime;
+		m_previousUpdateTime = currentTime;
+
 		for (Layer* layer : m_layerStack)
 		{
-			layer->OnUpdate();
+			layer->OnUpdate(deltaTime);
 		}
 	}
 

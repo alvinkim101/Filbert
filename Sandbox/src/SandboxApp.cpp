@@ -77,26 +77,28 @@ public:
 		m_vertexArray->SetElementBuffer(elementBuffer);
 	}
 
-	void OnUpdate() override
+	void OnUpdate(float deltaTime) override
 	{
+		float distance = m_cameraTranslateSpeed * deltaTime;
+
 		if (Filbert::Input::IsKeyPressed(FB_KEY_W))
 		{
-			m_camera.Translate(glm::vec3(0, 0, 0.1f));
+			m_camera.Translate(glm::vec3(0, 0, distance));
 		}
 
 		if (Filbert::Input::IsKeyPressed(FB_KEY_S))
 		{
-			m_camera.Translate(glm::vec3(0, 0, -0.1f));
+			m_camera.Translate(glm::vec3(0, 0, -distance));
 		}
 
 		if (Filbert::Input::IsKeyPressed(FB_KEY_A))
 		{
-			m_camera.Translate(glm::vec3(-0.1f, 0, 0));
+			m_camera.Translate(glm::vec3(-distance, 0, 0));
 		}
 
 		if (Filbert::Input::IsKeyPressed(FB_KEY_D))
 		{
-			m_camera.Translate(glm::vec3(0.1f, 0, 0));
+			m_camera.Translate(glm::vec3(distance, 0, 0));
 		}
 
 		FB_INFO("{}", glm::to_string(m_camera.GetPosition()));
@@ -117,7 +119,9 @@ public:
 private:
 	std::shared_ptr<Filbert::VertexArray> m_vertexArray;
 	std::shared_ptr<Filbert::Shader> m_shader;
+
 	Filbert::PerspectiveCamera m_camera;
+	float m_cameraTranslateSpeed = 1.0f;
 };
 
 class Sandbox : public Filbert::Application

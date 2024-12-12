@@ -45,7 +45,7 @@ namespace Filbert
 		ImGui::DestroyContext();
 	}
 
-	void ImGuiLayer::OnUpdate()
+	void ImGuiLayer::OnUpdate(float deltaTime)
 	{
 		// (Your code calls glfwPollEvents())
 		// ...

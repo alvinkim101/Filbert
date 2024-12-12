@@ -12,7 +12,7 @@ namespace Filbert
 
 		void OnAttach() override;
 		void OnDetach() override;
-		void OnUpdate() override;
+		void OnUpdate(float deltaTime) override;
 		void OnRender() override;
 		void OnEvent(Event& event) override;
 

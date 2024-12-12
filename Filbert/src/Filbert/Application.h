@@ -39,6 +39,7 @@ namespace Filbert
 		std::unique_ptr<Window> m_window{ Window::Create() };
 		LayerStack m_layerStack;
 		bool m_running = true;
+		float m_previousUpdateTime = 0.0;
 	};
 
 	// To be defined in the client

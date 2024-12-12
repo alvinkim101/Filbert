@@ -48,6 +48,11 @@ namespace Filbert
 		glfwSwapBuffers(m_window);
 	}
 
+	float WindowsWindow::GetTime() const
+	{
+		return static_cast<float>(glfwGetTime());
+	}
+
 	void WindowsWindow::SetVSync(bool enabled)
 	{
 		glfwSwapInterval(enabled);

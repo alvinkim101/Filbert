@@ -33,6 +33,9 @@ namespace Filbert
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
 
+		// Seconds
+		virtual float GetTime() const = 0; // Will float precision be an issue?
+
 		virtual void* GetNativeWindow() = 0;
 
 		static Window* Create(const WindowProps& props = WindowProps());
