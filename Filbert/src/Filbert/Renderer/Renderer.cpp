@@ -17,11 +17,12 @@ namespace Filbert
 
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const std::string& viewProjectionName)
+	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const std::string& viewProjectionName, const glm::mat4& model, const std::string& modelName)
 	{
 		shader->Bind();
 		vertexArray->Bind();
 		shader->UploadUniform(viewProjectionName, s_viewProjection);
+		shader->UploadUniform(modelName, model);
 
 		RenderCommand::DrawElements(vertexArray);
 	}

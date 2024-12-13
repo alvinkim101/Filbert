@@ -3,6 +3,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class ExampleLayer : public Filbert::Layer
 {
@@ -36,6 +37,7 @@ public:
 		std::string vertexSource = R"(
 			#version 460 core
 
+			uniform mat4 model;
 			uniform mat4 viewProjection;
 
 			layout (location = 0) in vec3 aPosition;
@@ -45,7 +47,7 @@ public:
 
 			void main()
 			{
-				mat4 modelViewProjection = viewProjection ; // * model
+				mat4 modelViewProjection = viewProjection * model;
 				gl_Position = modelViewProjection * vec4(aPosition, 1.0f);
 				bColor = aColor;
 			}
@@ -101,13 +103,14 @@ public:
 			m_camera.Translate(glm::vec3(distance, 0, 0));
 		}
 
-		FB_INFO("{}", glm::to_string(m_camera.GetPosition()));
+		float degrees = m_objectRotationSpeed * deltaTime;
+		m_objectRotation = glm::rotate(m_objectRotation, glm::radians(degrees), m_objectRotationAxis);
 	}
 
 	void OnRender() override
 	{
 		Filbert::Renderer::BeginScene(m_camera);
-		Filbert::Renderer::Submit(m_shader, m_vertexArray, "viewProjection");
+		Filbert::Renderer::Submit(m_shader, m_vertexArray, "viewProjection", m_objectRotation, "model");
 		Filbert::Renderer::EndScene();
 	}
 
@@ -122,6 +125,10 @@ private:
 
 	Filbert::PerspectiveCamera m_camera;
 	float m_cameraTranslateSpeed = 1.0f;
+
+	glm::mat4 m_objectRotation = glm::mat4(1.0f);
+	glm::vec3 m_objectRotationAxis = glm::vec3{ 0, 0, 1.0f };
+	float m_objectRotationSpeed = 180.0f; // degrees per sec
 };
 
 class Sandbox : public Filbert::Application
