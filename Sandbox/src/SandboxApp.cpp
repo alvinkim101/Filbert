@@ -137,7 +137,6 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Filbert::ImGuiLayer());
 	}
 
 	virtual ~Sandbox()

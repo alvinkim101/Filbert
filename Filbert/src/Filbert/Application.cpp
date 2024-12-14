@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Filbert
 {
@@ -10,12 +11,15 @@ namespace Filbert
 	{
 		FB_CORE_ASSERT(!s_application, "More than one application created");
 		s_application = this;
+
 		m_window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+		ImGuiLayer::Initialize();
 	}
 
 	Application::~Application()
 	{
-
+		ImGuiLayer::Deinitialize();
 	}
 
 	void Application::Run()
@@ -49,10 +53,14 @@ namespace Filbert
 	{
 		m_window->Clear();
 
+		ImGuiLayer::NewFrame();
+
 		for (Layer* layer : m_layerStack)
 		{
 			layer->OnRender();
 		}
+
+		ImGuiLayer::Render();
 
 		m_window->SwapBuffers();
 	}
