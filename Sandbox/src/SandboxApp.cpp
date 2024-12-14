@@ -4,23 +4,20 @@
 #include <glm/gtx/string_cast.hpp>
 #include <glm/vec3.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <imgui.h>
 
 class ExampleLayer : public Filbert::Layer
 {
-	struct Vertex
-	{
-		glm::vec3 coordinates;
-		glm::vec3 color;
-	};
-
 public:
 	ExampleLayer() : Layer("ExampleLayer")
 	{
-		Vertex vertices[] =
+		glm::vec3 vertices[] =
 		{
-			{ glm::vec3(-0.5f, -0.5f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
-			{ glm::vec3(0.0f, 0.5f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f) },
-			{ glm::vec3(0.5f, -0.5f, 0.0f), glm::vec3(1.0f, 0.0f, 0.0f) }
+			glm::vec3(-0.5f, -0.5f, 0.0f),
+			glm::vec3(0.0f, 0.5f, 0.0f),
+			glm::vec3(0.5f, -0.5f, 0.0f)
 		};
 
 		unsigned int indices[] =
@@ -30,8 +27,7 @@ public:
 
 		Filbert::BufferLayout layout =
 		{
-			{ "coordinates", Filbert::ShaderDataType::Float3 },
-			{ "color", Filbert::ShaderDataType::Float3 }
+			{ "coordinates", Filbert::ShaderDataType::Float3 }
 		};
 
 		std::string vertexSource = R"(
@@ -40,29 +36,25 @@ public:
 			uniform mat4 model;
 			uniform mat4 viewProjection;
 
-			layout (location = 0) in vec3 aPosition;
-			layout (location = 1) in vec3 aColor;
-			
-			out vec3 bColor;
+			layout (location = 0) in vec3 inPosition;
 
 			void main()
 			{
 				mat4 modelViewProjection = viewProjection * model;
-				gl_Position = modelViewProjection * vec4(aPosition, 1.0f);
-				bColor = aColor;
+				gl_Position = modelViewProjection * vec4(inPosition, 1.0f);
 			}
 		)";
 
 		std::string fragmentSource = R"(
 			#version 460 core
 
-			in vec3 bColor;
+			uniform vec3 color;
 			
-			out vec4 fragmentColor;
+			out vec4 outColor;
 
 			void main()
 			{
-				fragmentColor = vec4(bColor, 1.0f);
+				outColor = vec4(color, 1.0f);
 			} 
 		)";
 
@@ -81,6 +73,7 @@ public:
 
 	void OnUpdate(float deltaTime) override
 	{
+		// Camera translation
 		float distance = m_cameraTranslateSpeed * deltaTime;
 
 		if (Filbert::Input::IsKeyPressed(FB_KEY_W))
@@ -103,6 +96,7 @@ public:
 			m_camera.Translate(glm::vec3(distance, 0, 0));
 		}
 
+		// Object rotation
 		float degrees = m_objectRotationSpeed * deltaTime;
 		m_objectRotation = glm::rotate(m_objectRotation, glm::radians(degrees), m_objectRotationAxis);
 	}
@@ -110,7 +104,15 @@ public:
 	void OnRender() override
 	{
 		Filbert::Renderer::BeginScene(m_camera);
+
+		// Object color
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Color", glm::value_ptr(m_color));
+		ImGui::End();
+		m_shader->UploadUniform("color", m_color);
+
 		Filbert::Renderer::Submit(m_shader, m_vertexArray, "viewProjection", m_objectRotation, "model");
+
 		Filbert::Renderer::EndScene();
 	}
 
@@ -129,6 +131,8 @@ private:
 	glm::mat4 m_objectRotation = glm::mat4(1.0f);
 	glm::vec3 m_objectRotationAxis = glm::vec3{ 0, 0, 1.0f };
 	float m_objectRotationSpeed = 180.0f; // degrees per sec
+
+	glm::vec3 m_color = { 1.0f, 0.0f, 0.0f };
 };
 
 class Sandbox : public Filbert::Application
