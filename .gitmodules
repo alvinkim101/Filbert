@@ -10,3 +10,6 @@
 [submodule "Filbert/vendor/glm"]
 	path = Filbert/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Filbert/vendor/stb"]
+	path = Filbert/vendor/stb
+	url = https://github.com/nothings/stb.git

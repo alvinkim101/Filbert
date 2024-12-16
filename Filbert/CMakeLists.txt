@@ -9,6 +9,7 @@ add_subdirectory(vendor/imgui)
 add_library(Filbert STATIC
 	src/Filbert.h
 	src/pch.h
+	src/stb.cpp
 	src/Filbert/Core.h
 	src/Filbert/EntryPoint.h
 	src/Filbert/Application.cpp
@@ -70,6 +71,7 @@ target_include_directories(Filbert PUBLIC vendor/glfw/include)
 target_include_directories(Filbert PUBLIC vendor/glad/include)
 target_include_directories(Filbert PUBLIC vendor/imgui/imgui vendor/imgui/imgui/backends vendor/imgui/imgui/misc/cpp)
 target_include_directories(Filbert PUBLIC vendor/glm)
+target_include_directories(Filbert PUBLIC vendor/stb)
 
 target_compile_definitions(Filbert PUBLIC $<$<PLATFORM_ID:Windows>:FB_PLATFORM_WINDOWS>)
 target_compile_definitions(Filbert PUBLIC $<$<CONFIG:Debug>:FB_ASSERTS_ENABLED>)
