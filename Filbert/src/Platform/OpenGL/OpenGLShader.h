@@ -14,8 +14,9 @@ namespace Filbert
 		void Bind() const override;
 		void Unbind() const override;
 
-		void UploadUniform(const std::string& name, const glm::mat4& matrix);
-		void UploadUniform(const std::string& name, const glm::vec3& vector);
+		void UploadUniform(const std::string& name, const glm::mat4& matrix) override;
+		void UploadUniform(const std::string& name, const glm::vec3& vector) override;
+		void UploadUniform(const std::string& name, int integer) override;
 
 	private:
 		unsigned int m_program = 0;

@@ -140,4 +140,10 @@ namespace Filbert
 		auto uniform = glGetUniformLocation(m_program, name.c_str());
 		glProgramUniform3fv(m_program, uniform, 1, glm::value_ptr(vector));
 	}
+
+	void OpenGLShader::UploadUniform(const std::string& name, int integer)
+	{
+		auto uniform = glGetUniformLocation(m_program, name.c_str());
+		glProgramUniform1i(m_program, uniform, integer);
+	}
 }

@@ -9,7 +9,6 @@ add_subdirectory(vendor/imgui)
 add_library(Filbert STATIC
 	src/Filbert.h
 	src/pch.h
-	src/stb.cpp
 	src/Filbert/Core.h
 	src/Filbert/EntryPoint.h
 	src/Filbert/Application.cpp
@@ -43,6 +42,8 @@ add_library(Filbert STATIC
 	src/Filbert/Renderer/RendererAPI.h
 	src/Filbert/Renderer/Shader.cpp
 	src/Filbert/Renderer/Shader.h
+	src/Filbert/Renderer/Texture.cpp
+	src/Filbert/Renderer/Texture.h
 	src/Filbert/Renderer/VertexArray.cpp
 	src/Filbert/Renderer/VertexArray.h
 	src/Platform/OpenGL/OpenGLBuffer.cpp
@@ -53,6 +54,8 @@ add_library(Filbert STATIC
 	src/Platform/OpenGL/OpenGLRendererAPI.h
 	src/Platform/OpenGL/OpenGLShader.cpp
 	src/Platform/OpenGL/OpenGLShader.h
+	src/Platform/OpenGL/OpenGLTexture.cpp
+	src/Platform/OpenGL/OpenGLTexture.h
 	src/Platform/OpenGL/OpenGLVertexArray.cpp
 	src/Platform/OpenGL/OpenGLVertexArray.h
 	src/Platform/Windows/WindowsInput.cpp
