@@ -7,6 +7,8 @@ namespace Filbert
 	class RenderCommand
 	{
 	public:
+		static void Initialize() { s_rendererAPI->Initialize(); }
+
 		static void SetClearColor(const glm::vec4& color) { s_rendererAPI->SetClearColor(color); }
 		static void Clear() { s_rendererAPI->Clear(); }
 

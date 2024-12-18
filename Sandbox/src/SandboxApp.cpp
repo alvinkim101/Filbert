@@ -87,7 +87,7 @@ public:
 		m_vertexArray->AddVertexBuffer(vertexBuffer);
 		m_vertexArray->SetElementBuffer(elementBuffer);
 
-		m_texture.reset(Filbert::Texture2D::Create("assets/textures/Smoku Smoki.jpg"));
+		m_texture.reset(Filbert::Texture2D::Create("assets/textures/reddit.png"));
 		m_shader->UploadUniform("u_texture", 0);
 	}
 

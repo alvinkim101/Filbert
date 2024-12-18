@@ -11,6 +11,8 @@ namespace Filbert
 	class Renderer
 	{
 	public:
+		static void Initialize() { RenderCommand::Initialize(); }
+
 		static void BeginScene(const Camera& camera);
 		static void EndScene();
 
