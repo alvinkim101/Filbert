@@ -16,4 +16,17 @@ namespace Filbert
 			return nullptr;
 		}
 	}
+
+	Shader* Shader::Create(const std::string& fileName)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::OpenGL:
+			return new OpenGLShader(fileName);
+
+		default:
+			FB_CORE_ASSERT(false, "Current renderer API not supported");
+			return nullptr;
+		}
+	}
 }

@@ -18,5 +18,6 @@ namespace Filbert
 		virtual void UploadUniform(const std::string& name, int integer) = 0;
 
 		static Shader* Create(const std::string& vertexSource, const std::string& fragmentSource);
+		static Shader* Create(const std::string& filePath);
 	};
 }
