@@ -44,14 +44,14 @@ public:
 		elementBuffer.reset(Filbert::ElementBuffer::Create(squareIndices, sizeof(squareIndices)));
 		vertexBuffer->SetLayout(squareLayout);
 
-		m_shader.reset(Filbert::Shader::Create("assets/shaders/Texture.glsl"));
-		m_vertexArray.reset(Filbert::VertexArray::Create());
+		auto shader = m_shaderLibrary.Load("Texture", "assets/shaders/Texture.glsl");
 
+		m_vertexArray.reset(Filbert::VertexArray::Create());
 		m_vertexArray->AddVertexBuffer(vertexBuffer);
 		m_vertexArray->SetElementBuffer(elementBuffer);
 
 		m_texture.reset(Filbert::Texture2D::Create("assets/textures/reddit.png"));
-		m_shader->UploadUniform("u_texture", 0);
+		shader->UploadUniform("u_texture", 0);
 	}
 
 	void OnUpdate(float deltaTime) override
@@ -95,7 +95,8 @@ public:
 
 		m_texture->Bind();
 
-		Filbert::Renderer::Submit(m_shader, m_vertexArray, "u_viewProjection", m_objectRotation, "u_model");
+		auto shader = m_shaderLibrary.Get("Texture");
+		Filbert::Renderer::Submit(shader, m_vertexArray, "u_viewProjection", m_objectRotation, "u_model");
 
 		Filbert::Renderer::EndScene();
 	}
@@ -106,8 +107,8 @@ public:
 	}
 
 private:
+	Filbert::ShaderLibrary m_shaderLibrary;
 	std::shared_ptr<Filbert::VertexArray> m_vertexArray;
-	std::shared_ptr<Filbert::Shader> m_shader;
 	std::shared_ptr<Filbert::Texture2D> m_texture;
 
 	Filbert::PerspectiveCamera m_camera;

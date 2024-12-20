@@ -14,7 +14,7 @@ namespace Filbert
 		};
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSource, const std::string& fragmentSource)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource) : m_name(name)
 	{
 		std::unordered_map<GLenum, std::string> shaderMap;
 		shaderMap[GL_VERTEX_SHADER] = vertexSource;
@@ -23,7 +23,7 @@ namespace Filbert
 		Compile(shaderMap);
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& filePath)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& filePath) : m_name(name)
 	{
 		std::string source = ReadFile(filePath);
 		std::unordered_map<GLenum, std::string> shaderMap = ParseSource(source);
