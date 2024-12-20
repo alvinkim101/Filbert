@@ -102,8 +102,9 @@ namespace Filbert
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderMap)
 	{
-		std::vector<GLuint> shaders;
-		shaders.reserve(shaderMap.size());
+		constexpr uint8_t maxShaders = 6;
+		std::array<GLuint, maxShaders> shaders;
+		uint8_t shaderIndex = 0;
 
 		// https://en.cppreference.com/w/cpp/language/structured_binding
 		for (const auto& [shaderType, shaderSource] : shaderMap)
@@ -131,9 +132,9 @@ namespace Filbert
 				glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
 
 				// We don't need the shaders anymore.
-				for (const auto shader : shaders)
+				for (int i = 0; i < shaderIndex; i++)
 				{
-					glDeleteShader(shader);
+					glDeleteShader(shaders[i]);
 				}
 				glDeleteShader(shader);
 
@@ -142,7 +143,7 @@ namespace Filbert
 				return;
 			}
 
-			shaders.push_back(shader);
+			shaders[shaderIndex++] = shader;
 		}
 
 		// Shaders are successfully compiled.
@@ -151,9 +152,9 @@ namespace Filbert
 		GLuint program = glCreateProgram();
 
 		// Attach our shaders to our program
-		for (const auto& shader : shaders)
+		for (int i = 0; i < shaderIndex; i++)
 		{
-			glAttachShader(program, shader);
+			glAttachShader(program, shaders[i]);
 		}
 
 		// Link our program
@@ -174,9 +175,9 @@ namespace Filbert
 			// We don't need the program anymore.
 			glDeleteProgram(program);
 			// Don't leak shaders either.
-			for (const auto& shader : shaders)
+			for (int i = 0; i < shaderIndex; i++)
 			{
-				glDeleteShader(shader);
+				glDeleteShader(shaders[i]);
 			}
 
 			// Use the infoLog as you see fit.
@@ -189,10 +190,10 @@ namespace Filbert
 
 		// Always detach shaders after a successful link.
 		// Shader deletion is deferred until detached from program
-		for (const auto& shader : shaders)
+		for (int i = 0; i < shaderIndex; i++)
 		{
-			glDetachShader(program, shader);
-			glDeleteShader(shader);
+			glDetachShader(program, shaders[i]);
+			glDeleteShader(shaders[i]);
 		}
 	}
 
