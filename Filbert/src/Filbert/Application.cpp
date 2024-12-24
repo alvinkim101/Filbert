@@ -3,8 +3,6 @@
 
 namespace Filbert
 {
-	#define BIND_EVENT_FN(f) std::bind(&Application::f, this, std::placeholders::_1)
-
 	Application* Application::s_application = nullptr;
 
 	Application::Application()
@@ -12,7 +10,7 @@ namespace Filbert
 		FB_CORE_ASSERT(!s_application, "More than one application created");
 		s_application = this;
 
-		m_window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_window->SetEventCallback(FB_BIND_EVENT_FN(Application::OnEvent));
 
 		ImGuiLayer::Initialize();
 	}
@@ -68,7 +66,7 @@ namespace Filbert
 	void Application::OnEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowCloseEvent));
+		dispatcher.Dispatch<WindowCloseEvent>(FB_BIND_EVENT_FN(Application::OnWindowCloseEvent));
 
 		for (Layer* layer : std::ranges::reverse_view(m_layerStack))
 		{

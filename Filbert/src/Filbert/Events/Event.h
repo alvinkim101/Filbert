@@ -61,7 +61,7 @@ namespace Filbert
 		{
 			if (m_event.GetType() == T::GetTypeStatic())
 			{
-				m_event.handled = f(dynamic_cast<T&>(m_event));
+				m_event.handled = f(static_cast<T&>(m_event));
 				return true;
 			}
 

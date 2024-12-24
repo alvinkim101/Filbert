@@ -7,3 +7,5 @@
 	#define FB_CORE_ASSERT(x, ...)
 	#define FB_ASSERT(x, ...)
 #endif
+
+#define FB_BIND_EVENT_FN(f) std::bind(&f, this, std::placeholders::_1)
