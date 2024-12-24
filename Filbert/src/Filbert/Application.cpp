@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Renderer/Renderer.h"
 
 namespace Filbert
 {
@@ -41,6 +42,11 @@ namespace Filbert
 		float deltaTime = currentTime - m_previousUpdateTime;
 		m_previousUpdateTime = currentTime;
 
+		if (m_minimized)
+		{
+			return;
+		}
+
 		for (Layer* layer : m_layerStack)
 		{
 			layer->OnUpdate(deltaTime);
@@ -67,6 +73,7 @@ namespace Filbert
 	{
 		EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<WindowCloseEvent>(FB_BIND_EVENT_FN(Application::OnWindowCloseEvent));
+		dispatcher.Dispatch<WindowResizeEvent>(FB_BIND_EVENT_FN(Application::OnWindowResizeEvent));
 
 		for (Layer* layer : std::ranges::reverse_view(m_layerStack))
 		{
@@ -104,5 +111,22 @@ namespace Filbert
 		m_running = false;
 		event.handled = true;
 		return true;
+	}
+
+	bool Application::OnWindowResizeEvent(WindowResizeEvent& event)
+	{
+		auto [width, height] = event.GetResolution();
+
+		if (width == 0 || height == 0)
+		{
+			m_minimized = true;
+		}
+		else
+		{
+			m_minimized = false;
+		}
+
+		Renderer::OnWindowResize(width, height);
+		return false;
 	}
 }

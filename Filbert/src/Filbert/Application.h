@@ -34,11 +34,13 @@ namespace Filbert
 		inline void Render();
 
 		bool OnWindowCloseEvent(WindowCloseEvent& event);
+		bool OnWindowResizeEvent(WindowResizeEvent& event);
 
 		static Application* s_application;
 		std::unique_ptr<Window> m_window{ Window::Create() };
 		LayerStack m_layerStack;
 		bool m_running = true;
+		bool m_minimized = false;
 		float m_previousUpdateTime = 0.0;
 	};
 

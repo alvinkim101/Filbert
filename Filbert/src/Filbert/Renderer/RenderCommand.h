@@ -9,6 +9,8 @@ namespace Filbert
 	public:
 		static void Initialize() { s_rendererAPI->Initialize(); }
 
+		static void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) { s_rendererAPI->SetViewport(x, y, width, height); }
+
 		static void SetClearColor(const glm::vec4& color) { s_rendererAPI->SetClearColor(color); }
 		static void Clear() { s_rendererAPI->Clear(); }
 
