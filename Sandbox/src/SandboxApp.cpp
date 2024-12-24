@@ -56,28 +56,8 @@ public:
 
 	void OnUpdate(float deltaTime) override
 	{
-		// Camera translation
-		float distance = m_cameraTranslateSpeed * deltaTime;
-
-		if (Filbert::Input::IsKeyPressed(FB_KEY_W))
-		{
-			m_camera.Translate(glm::vec3(0, 0, distance));
-		}
-
-		if (Filbert::Input::IsKeyPressed(FB_KEY_S))
-		{
-			m_camera.Translate(glm::vec3(0, 0, -distance));
-		}
-
-		if (Filbert::Input::IsKeyPressed(FB_KEY_A))
-		{
-			m_camera.Translate(glm::vec3(-distance, 0, 0));
-		}
-
-		if (Filbert::Input::IsKeyPressed(FB_KEY_D))
-		{
-			m_camera.Translate(glm::vec3(distance, 0, 0));
-		}
+		// Camera controller update
+		m_cameraController.OnUpdate(deltaTime);
 
 		// Object rotation
 		float degrees = m_objectRotationSpeed * deltaTime;
@@ -86,7 +66,7 @@ public:
 
 	void OnRender() override
 	{
-		Filbert::Renderer::BeginScene(m_camera);
+		Filbert::Renderer::BeginScene(m_cameraController.GetCamera());
 
 		/*ImGui::Begin("Settings");
 		ImGui::ColorEdit3("Color", glm::value_ptr(m_color));
@@ -103,7 +83,7 @@ public:
 
 	void OnEvent(Filbert::Event& event) override
 	{
-
+		m_cameraController.OnEvent(event);
 	}
 
 private:
@@ -111,8 +91,7 @@ private:
 	std::shared_ptr<Filbert::VertexArray> m_vertexArray;
 	std::shared_ptr<Filbert::Texture2D> m_texture;
 
-	Filbert::PerspectiveCamera m_camera;
-	float m_cameraTranslateSpeed = 1.0f;
+	Filbert::PerspectiveCameraController m_cameraController{ std::make_shared<Filbert::PerspectiveCamera>() };
 
 	glm::mat4 m_objectRotation = glm::mat4(1.0f);
 	glm::vec3 m_objectRotationAxis = glm::vec3{ 0, 0, 1.0f };

@@ -9,6 +9,8 @@ add_subdirectory(vendor/imgui)
 add_library(Filbert STATIC
 	src/Filbert.h
 	src/pch.h
+	src/Filbert/CameraController.cpp
+	src/Filbert/CameraController.h
 	src/Filbert/Core.h
 	src/Filbert/EntryPoint.h
 	src/Filbert/Application.cpp

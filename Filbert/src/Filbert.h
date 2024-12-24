@@ -18,5 +18,7 @@
 #include <Filbert/Renderer/Camera.h>
 #include <Filbert/Renderer/Texture.h>
 
+#include <Filbert/CameraController.h>
+
 // Entry point
 #include "Filbert/EntryPoint.h"

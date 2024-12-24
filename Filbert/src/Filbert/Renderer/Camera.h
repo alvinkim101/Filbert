@@ -69,6 +69,9 @@ namespace Filbert
 
 		void Config(float verticalFOV, float aspectRatio);
 
+		float GetFOV() const { return m_config.verticalFOV; }
+		float GetAspectRatio() const { return m_config.aspectRatio; }
+
 	private:
 		inline void CalculateProjection() final;
 
