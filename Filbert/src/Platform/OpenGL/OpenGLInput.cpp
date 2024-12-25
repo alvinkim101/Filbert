@@ -1,11 +1,11 @@
-#include "WindowsInput.h"
+#include "OpenGLInput.h"
 #include "Filbert/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 
 namespace Filbert
 {
-	Input* Input::s_input = new WindowsInput();
+	Input* Input::s_input = new OpenGLInput();
 
 	namespace
 	{
@@ -15,21 +15,21 @@ namespace Filbert
 		}
 	}
 
-	bool WindowsInput::IsKeyPressedImpl(int key) const
+	bool OpenGLInput::IsKeyPressedImpl(int key) const
 	{
 		GLFWwindow* window = GetGLFWwindow();
 
 		return glfwGetKey(window, key) == GLFW_PRESS; // GLFW_REPEAT is only reported to the callback
 	}
 
-	bool WindowsInput::IsMouseButtonPressedImpl(int button) const
+	bool OpenGLInput::IsMouseButtonPressedImpl(int button) const
 	{
 		GLFWwindow* window = GetGLFWwindow();
 
 		return glfwGetMouseButton(window, button) == GLFW_PRESS;
 	}
 
-	std::pair<float, float> WindowsInput::GetMousePositionImpl() const
+	std::pair<float, float> OpenGLInput::GetMousePositionImpl() const
 	{
 		GLFWwindow* window = GetGLFWwindow();
 		double xpos, ypos;

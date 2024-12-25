@@ -1,9 +1,5 @@
 #pragma once
 
-#ifdef FB_PLATFORM_WINDOWS
-	#include <Windows.h>
-#endif
-
 #include <functional>
 #include <fstream>
 #include <memory>

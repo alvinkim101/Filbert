@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef FB_PLATFORM_WINDOWS
-
 extern Filbert::Application* Filbert::CreateApplication();
 
 int main(int argc, char* argv[])
@@ -13,5 +11,3 @@ int main(int argc, char* argv[])
 	app->Run();
 	delete app;
 }
-
-#endif

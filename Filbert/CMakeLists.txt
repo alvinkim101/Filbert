@@ -18,6 +18,7 @@ add_library(Filbert STATIC
 	src/Filbert/Core/LayerStack.h
 	src/Filbert/Core/Log.cpp
 	src/Filbert/Core/Log.h
+	src/Filbert/Core/Window.cpp
 	src/Filbert/Core/Window.h
 	src/Filbert/Events/ApplicationEvent.h
 	src/Filbert/Events/Event.h
@@ -60,10 +61,10 @@ add_library(Filbert STATIC
 	src/Platform/OpenGL/OpenGLTexture.h
 	src/Platform/OpenGL/OpenGLVertexArray.cpp
 	src/Platform/OpenGL/OpenGLVertexArray.h
-	src/Platform/Windows/WindowsInput.cpp
-	src/Platform/Windows/WindowsInput.h
-	src/Platform/Windows/WindowsWindow.cpp
-	src/Platform/Windows/WindowsWindow.h
+	src/Platform/OpenGL/OpenGLInput.cpp
+	src/Platform/OpenGL/OpenGLInput.h
+	src/Platform/OpenGL/OpenGLWindow.cpp
+	src/Platform/OpenGL/OpenGLWindow.h
 )
 
 target_link_libraries(Filbert glfw)

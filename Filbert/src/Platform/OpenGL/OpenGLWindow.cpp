@@ -1,4 +1,4 @@
-#include "WindowsWindow.h"
+#include "OpenGLWindow.h"
 #include "Filbert/Events/ApplicationEvent.h"
 #include "Filbert/Events/MouseEvent.h"
 #include "Filbert/Events/KeyEvent.h"
@@ -18,48 +18,43 @@ namespace Filbert
 		}
 	}
 
-	Window* Window::Create(const WindowProps& props)
-	{
-		return new WindowsWindow(props);
-	}
-
-	WindowsWindow::WindowsWindow(const WindowProps& props)
+	OpenGLWindow::OpenGLWindow(const WindowProps& props)
 	{
 		Init(props);
 	}
 
-	WindowsWindow::~WindowsWindow()
+	OpenGLWindow::~OpenGLWindow()
 	{
 		Shutdown();
 	}
 
-	void WindowsWindow::ProcessInput()
+	void OpenGLWindow::ProcessInput()
 	{
 		glfwPollEvents();
 	}
 
-	void WindowsWindow::Clear()
+	void OpenGLWindow::Clear()
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	void WindowsWindow::SwapBuffers()
+	void OpenGLWindow::SwapBuffers()
 	{
 		glfwSwapBuffers(m_window);
 	}
 
-	float WindowsWindow::GetTime() const
+	float OpenGLWindow::GetTime() const
 	{
 		return static_cast<float>(glfwGetTime());
 	}
 
-	void WindowsWindow::SetVSync(bool enabled)
+	void OpenGLWindow::SetVSync(bool enabled)
 	{
 		glfwSwapInterval(enabled);
 		m_data.vSync = enabled;
 	}
 
-	void WindowsWindow::Init(const WindowProps& props)
+	void OpenGLWindow::Init(const WindowProps& props)
 	{
 		if (!GLFWInitialized)
 		{
@@ -83,7 +78,7 @@ namespace Filbert
 		glfwSetWindowUserPointer(m_window, &m_data);
 		SetVSync(true);
 
-		FB_CORE_INFO("WindowsWindow created with width {} and height {}", m_data.width, m_data.height);
+		FB_CORE_INFO("OpenGLWindow created with width {} and height {}", m_data.width, m_data.height);
 
 		// Set callbacks
 		glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window)
@@ -208,7 +203,7 @@ namespace Filbert
 		);
 	}
 
-	void WindowsWindow::Shutdown()
+	void OpenGLWindow::Shutdown()
 	{
 		glfwDestroyWindow(m_window);
 	}

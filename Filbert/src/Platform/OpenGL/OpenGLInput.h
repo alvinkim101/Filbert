@@ -4,7 +4,7 @@
 
 namespace Filbert
 {
-	class WindowsInput : public Input
+	class OpenGLInput : public Input
 	{
 	protected:
 		bool IsKeyPressedImpl(int key) const override;

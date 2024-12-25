@@ -6,11 +6,11 @@ struct GLFWwindow;
 
 namespace Filbert
 {
-	class WindowsWindow : public Window
+	class OpenGLWindow : public Window
 	{
 	public:
-		WindowsWindow(const WindowProps& props);
-		~WindowsWindow() override;
+		OpenGLWindow(const WindowProps& props);
+		~OpenGLWindow() override;
 
 		void ProcessInput() override;
 		void Clear() override;
