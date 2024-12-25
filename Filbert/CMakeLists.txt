@@ -9,31 +9,31 @@ add_subdirectory(vendor/imgui)
 add_library(Filbert STATIC
 	src/Filbert.h
 	src/pch.h
-	src/Filbert/CameraController.cpp
-	src/Filbert/CameraController.h
-	src/Filbert/Core.h
-	src/Filbert/EntryPoint.h
-	src/Filbert/Application.cpp
-	src/Filbert/Application.h
-	src/Filbert/Input.h
-	src/Filbert/KeyCodes.h
-	src/Filbert/Layer.h
-	src/Filbert/LayerStack.cpp
-	src/Filbert/LayerStack.h
-	src/Filbert/Log.cpp
-	src/Filbert/Log.h
-	src/Filbert/MouseButtonCodes.h
-	src/Filbert/Window.h
+	src/Filbert/Core/Core.h
+	src/Filbert/Core/EntryPoint.h
+	src/Filbert/Core/Application.cpp
+	src/Filbert/Core/Application.h
+	src/Filbert/Core/Layer.h
+	src/Filbert/Core/LayerStack.cpp
+	src/Filbert/Core/LayerStack.h
+	src/Filbert/Core/Log.cpp
+	src/Filbert/Core/Log.h
+	src/Filbert/Core/Window.h
 	src/Filbert/Events/ApplicationEvent.h
 	src/Filbert/Events/Event.h
 	src/Filbert/Events/KeyEvent.h
 	src/Filbert/Events/MouseEvent.h
 	src/Filbert/ImGui/ImGuiLayer.cpp
 	src/Filbert/ImGui/ImGuiLayer.h
+	src/Filbert/Input/Input.h
+	src/Filbert/Input/KeyCodes.h
+	src/Filbert/Input/MouseButtonCodes.h
 	src/Filbert/Renderer/Buffer.cpp
 	src/Filbert/Renderer/Buffer.h
 	src/Filbert/Renderer/Camera.cpp
 	src/Filbert/Renderer/Camera.h
+	src/Filbert/Renderer/CameraController.cpp
+	src/Filbert/Renderer/CameraController.h
 	src/Filbert/Renderer/Context.cpp
 	src/Filbert/Renderer/Context.h
 	src/Filbert/Renderer/RenderCommand.cpp

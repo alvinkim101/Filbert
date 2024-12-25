@@ -1,6 +1,6 @@
 #include "Application.h"
-#include "ImGui/ImGuiLayer.h"
-#include "Renderer/Renderer.h"
+#include "Filbert/ImGui/ImGuiLayer.h"
+#include "Filbert/Renderer/Renderer.h"
 
 namespace Filbert
 {

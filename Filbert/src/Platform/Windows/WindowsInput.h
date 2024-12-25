@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Filbert/Input.h"
+#include "Filbert/Input/Input.h"
 
 namespace Filbert
 {

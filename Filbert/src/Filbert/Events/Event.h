@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Filbert/Core.h"
+#include "Filbert/Core/Core.h"
 
 namespace Filbert
 {

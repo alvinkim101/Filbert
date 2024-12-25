@@ -1,7 +1,7 @@
 #include "CameraController.h"
-#include "Input.h"
-#include "KeyCodes.h"
-#include "MouseButtonCodes.h"
+#include "Filbert/Input/Input.h"
+#include "Filbert/Input/KeyCodes.h"
+#include "Filbert/Input/MouseButtonCodes.h"
 
 namespace Filbert
 {

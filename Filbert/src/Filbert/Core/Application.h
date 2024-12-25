@@ -3,9 +3,9 @@
 #include "Core.h"
 #include "LayerStack.h"
 #include "Window.h"
-#include "Events/ApplicationEvent.h"
-#include "Events/MouseEvent.h"
-#include "Events/KeyEvent.h"
+#include "Filbert/Events/ApplicationEvent.h"
+#include "Filbert/Events/MouseEvent.h"
+#include "Filbert/Events/KeyEvent.h"
 
 namespace Filbert
 {

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderer/Camera.h"
-#include "Events/ApplicationEvent.h"
-#include "Events/MouseEvent.h"
+#include "Camera.h"
+#include "Filbert/Events/ApplicationEvent.h"
+#include "Filbert/Events/MouseEvent.h"
 
 namespace Filbert
 {

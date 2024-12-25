@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Filbert/Window.h"
+#include "Filbert/Core/Window.h"
 
 struct GLFWwindow;
 
