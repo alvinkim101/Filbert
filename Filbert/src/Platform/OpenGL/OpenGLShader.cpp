@@ -77,7 +77,7 @@ namespace Filbert
 			{
 				shaderType = nameToEnum.at(shaderTypeString);
 			}
-			catch (const std::out_of_range& e)
+			catch (const std::out_of_range&)
 			{
 				FB_CORE_ASSERT(false, "Invalid shader type");
 			}

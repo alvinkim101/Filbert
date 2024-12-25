@@ -36,7 +36,7 @@ namespace Filbert
 		{
 			return m_shaders.at(name);
 		}
-		catch (const std::out_of_range& e)
+		catch (const std::out_of_range&)
 		{
 			FB_CORE_ASSERT(false, "Shader with specified name does not exist");
 			return nullptr;
