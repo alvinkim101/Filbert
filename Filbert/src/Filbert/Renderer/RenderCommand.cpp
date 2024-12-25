@@ -4,5 +4,5 @@
 
 namespace Filbert
 {
-	RendererAPI* RenderCommand::s_rendererAPI = RendererAPI::Create();
+	std::unique_ptr<RendererAPI> RenderCommand::s_rendererAPI = RendererAPI::Create();
 }

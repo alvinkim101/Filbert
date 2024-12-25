@@ -7,12 +7,12 @@ namespace Filbert
 	// TODO: Remove hardcoded renderer API
 	RendererAPI::API RendererAPI::s_api = RendererAPI::API::OpenGL;
 
-	RendererAPI* RendererAPI::Create()
+	std::unique_ptr<RendererAPI> RendererAPI::Create()
 	{
 		switch (s_api)
 		{
 		case RendererAPI::API::OpenGL:
-			return new OpenGLRendererAPI;
+			return std::make_unique<OpenGLRendererAPI>();
 
 		default:
 			FB_CORE_ASSERT(false, "Invalid renderer API");

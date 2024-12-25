@@ -40,17 +40,17 @@ public:
 
 		std::shared_ptr<Filbert::VertexBuffer> vertexBuffer;
 		std::shared_ptr<Filbert::ElementBuffer> elementBuffer;
-		vertexBuffer.reset(Filbert::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-		elementBuffer.reset(Filbert::ElementBuffer::Create(squareIndices, sizeof(squareIndices)));
+		vertexBuffer = Filbert::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
+		elementBuffer = Filbert::ElementBuffer::Create(squareIndices, sizeof(squareIndices));
 		vertexBuffer->SetLayout(squareLayout);
 
 		auto shader = m_shaderLibrary.Load("Texture", "assets/shaders/Texture.glsl");
 
-		m_vertexArray.reset(Filbert::VertexArray::Create());
+		m_vertexArray = Filbert::VertexArray::Create();
 		m_vertexArray->AddVertexBuffer(vertexBuffer);
 		m_vertexArray->SetElementBuffer(elementBuffer);
 
-		m_texture.reset(Filbert::Texture2D::Create("assets/textures/reddit.png"));
+		m_texture = Filbert::Texture2D::Create("assets/textures/reddit.png");
 		shader->UploadUniform("u_texture", 0);
 	}
 

@@ -25,7 +25,7 @@ namespace Filbert
 		virtual void DrawElements(const std::shared_ptr<VertexArray>& vertexArray) = 0;
 
 		static API GetAPI() { return s_api; }
-		static RendererAPI* Create();
+		static std::unique_ptr<RendererAPI> Create();
 
 	private:
 		static API s_api;

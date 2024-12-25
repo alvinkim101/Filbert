@@ -19,8 +19,8 @@ namespace Filbert
 		virtual void UploadUniform(const std::string& name, const glm::vec3& vector) = 0;
 		virtual void UploadUniform(const std::string& name, int integer) = 0;
 
-		static Shader* Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
-		static Shader* Create(const std::string& name, const std::string& filePath);
+		static std::shared_ptr<Shader> Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
+		static std::shared_ptr<Shader> Create(const std::string& name, const std::string& filePath);
 	};
 
 	class ShaderLibrary

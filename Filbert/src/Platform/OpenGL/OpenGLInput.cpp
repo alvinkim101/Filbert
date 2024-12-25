@@ -5,8 +5,6 @@
 
 namespace Filbert
 {
-	Input* Input::s_input = new OpenGLInput();
-
 	namespace
 	{
 		inline GLFWwindow* GetGLFWwindow()

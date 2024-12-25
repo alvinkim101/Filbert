@@ -4,12 +4,12 @@
 
 namespace Filbert
 {
-	VertexArray* VertexArray::Create()
+	std::shared_ptr<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::OpenGL:
-			return new OpenGLVertexArray();
+			return std::make_shared<OpenGLVertexArray>();
 
 		default:
 			FB_CORE_ASSERT(false, "Current renderer API not supported");

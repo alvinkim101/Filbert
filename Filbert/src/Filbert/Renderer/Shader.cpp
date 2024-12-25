@@ -4,12 +4,12 @@
 
 namespace Filbert
 {
-	Shader* Shader::Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource)
+	std::shared_ptr<Shader> Shader::Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::OpenGL:
-			return new OpenGLShader(name, vertexSource, fragmentSource);
+			return std::make_shared<OpenGLShader>(name, vertexSource, fragmentSource);
 
 		default:
 			FB_CORE_ASSERT(false, "Current renderer API not supported");
@@ -17,12 +17,12 @@ namespace Filbert
 		}
 	}
 
-	Shader* Shader::Create(const std::string& name, const std::string& filePath)
+	std::shared_ptr<Shader> Shader::Create(const std::string& name, const std::string& filePath)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::OpenGL:
-			return new OpenGLShader(name, filePath);
+			return std::make_shared<OpenGLShader>(name, filePath);
 
 		default:
 			FB_CORE_ASSERT(false, "Current renderer API not supported");

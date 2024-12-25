@@ -26,6 +26,7 @@ add_library(Filbert STATIC
 	src/Filbert/Events/MouseEvent.h
 	src/Filbert/ImGui/ImGuiLayer.cpp
 	src/Filbert/ImGui/ImGuiLayer.h
+	src/Filbert/Input/Input.cpp
 	src/Filbert/Input/Input.h
 	src/Filbert/Input/KeyCodes.h
 	src/Filbert/Input/MouseButtonCodes.h

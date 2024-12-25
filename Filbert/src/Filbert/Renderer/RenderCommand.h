@@ -17,6 +17,6 @@ namespace Filbert
 		static void DrawElements(const std::shared_ptr<VertexArray>& vertexArray) { s_rendererAPI->DrawElements(vertexArray); }
 
 	private:
-		static RendererAPI* s_rendererAPI;
+		static std::unique_ptr<RendererAPI> s_rendererAPI;
 	};
 }

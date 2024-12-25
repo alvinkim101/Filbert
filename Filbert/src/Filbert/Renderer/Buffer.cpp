@@ -4,12 +4,12 @@
 
 namespace Filbert
 {
-	VertexBuffer* VertexBuffer::Create(void* data, unsigned int size)
+	std::shared_ptr<VertexBuffer> VertexBuffer::Create(void* data, unsigned int size)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::OpenGL:
-			return new OpenGLVertexBuffer(data, size);
+			return std::make_shared<OpenGLVertexBuffer>(data, size);
 
 		default:
 			FB_CORE_ASSERT(false, "Current renderer API not supported");
@@ -17,12 +17,12 @@ namespace Filbert
 		}
 	}
 
-	ElementBuffer* ElementBuffer::Create(unsigned int indices[], unsigned int size)
+	std::shared_ptr<ElementBuffer> ElementBuffer::Create(unsigned int indices[], unsigned int size)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::OpenGL:
-			return new OpenGLElementBuffer(indices, size);
+			return std::make_shared<OpenGLElementBuffer>(indices, size);
 
 		default:
 			FB_CORE_ASSERT(false, "Current renderer API not supported");

@@ -7,12 +7,12 @@
 
 namespace Filbert
 {
-	Texture2D* Texture2D::Create(const std::string& fileName)
+	std::shared_ptr<Texture2D> Texture2D::Create(const std::string& fileName)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::OpenGL:
-			return new OpenGLTexture2D(fileName);
+			return std::make_shared<OpenGLTexture2D>(fileName);
 
 		default:
 			FB_CORE_ASSERT(false, "Current renderer API not supported");
