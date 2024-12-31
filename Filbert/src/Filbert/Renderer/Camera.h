@@ -26,6 +26,7 @@ namespace Filbert
 
 		void Translate(const glm::vec3& localOffset);
 		void Rotate(float degrees, const glm::vec3& rotationAxis);
+		virtual void Zoom(float offset) = 0;
 
 		// TODO: Encapsulate Forward/Up/Right in something like a Rotation class
 		glm::vec3 GetPosition() const { return m_position; }
@@ -56,18 +57,23 @@ namespace Filbert
 		float m_farPlane = 10.0f;
 	};
 
+	// TODO: Set aspect ratio and bounds at start by querying window size
+
 	class PerspectiveCamera : public Camera
 	{
 		struct PerspectiveConfig
 		{
-			float verticalFOV = glm::radians(60.0f);
+			float verticalFOV = 60.0f; // degrees
 			float aspectRatio = 1.77f;
 		};
 
 	public:
 		PerspectiveCamera();
 
-		void Config(float verticalFOV, float aspectRatio);
+		void Zoom(float offset) override;
+
+		void SetFOV(float verticalFOV);
+		void SetAspectRatio(float aspectRatio);
 
 		float GetFOV() const { return m_config.verticalFOV; }
 		float GetAspectRatio() const { return m_config.aspectRatio; }
@@ -82,16 +88,19 @@ namespace Filbert
 	{
 		struct OrthographicConfig
 		{
-			float left = -1.0f;
-			float right = 1.0f;
-			float bottom = -1.0f;
-			float top = 1.0f;
+			float left = -8.0f;
+			float right = 8.0f;
+			float bottom = -4.5f;
+			float top = 4.5f;
 		};
 
 	public:
 		OrthographicCamera();
 
-		void Config(float left, float right, float bottom, float top);
+		void Zoom(float offset) override;
+
+		void SetBounds(float left, float right, float bottom, float top);
+		std::tuple<float, float, float, float> GetBounds() { return { m_config.left, m_config.right, m_config.bottom, m_config.top }; }
 
 	private:
 		inline void CalculateProjection() final;

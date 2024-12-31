@@ -9,13 +9,6 @@ namespace Filbert
 	class CameraController
 	{
 	public:
-		CameraController(const std::shared_ptr<class Camera>& camera) : m_camera(camera) {}
-
-		void OnUpdate(float deltaTime);
-		bool OnMouseScroll(MouseScrollEvent& event);
-
-		const Camera& GetCamera() const { return *m_camera.get(); }
-
 		float GetTranslationSpeed() const { return m_translationSpeed; }
 		float GetRotationSpeed() const { return m_rotationSpeed; }
 		float GetZoomMultiplier() const { return m_zoomMultiplier; }
@@ -25,8 +18,6 @@ namespace Filbert
 		void SetZoomMultiplier(float zoomMultiplier) { m_zoomMultiplier = zoomMultiplier; }
 
 	protected:
-		std::shared_ptr<class Camera> m_camera;
-
 		float m_translationSpeed = 1.0f;
 		float m_rotationSpeed = 1.0f;
 		float m_zoomMultiplier = 1.0f;
@@ -35,22 +26,34 @@ namespace Filbert
 	class PerspectiveCameraController : public CameraController
 	{
 	public:
-		PerspectiveCameraController(const std::shared_ptr<class PerspectiveCamera>& camera) : CameraController(camera) {}
+		PerspectiveCameraController(const std::shared_ptr<class PerspectiveCamera>& perspectiveCamera) : m_camera(perspectiveCamera) {}
 
+		const Camera& GetCamera() const { return *m_camera.get(); }
+
+		void OnUpdate(float deltaTime);
 		void OnEvent(Event& event);
 
 	private:
+		bool OnMouseScroll(MouseScrollEvent& event);
 		bool OnWindowResize(WindowResizeEvent& event);
+
+		std::shared_ptr<class PerspectiveCamera> m_camera;
 	};
 
 	class OrthographicCameraController : public CameraController
 	{
 	public:
-		OrthographicCameraController(const std::shared_ptr<class OrthographicCamera>& camera) : CameraController(camera) {}
+		OrthographicCameraController(const std::shared_ptr<class OrthographicCamera>& orthographicCamera) : m_camera(orthographicCamera) {}
 
+		const Camera& GetCamera() const { return *m_camera.get(); }
+
+		void OnUpdate(float deltaTime);
 		void OnEvent(Event& event);
 
 	private:
+		bool OnMouseScroll(MouseScrollEvent& event);
 		bool OnWindowResize(WindowResizeEvent& event);
+
+		std::shared_ptr<class OrthographicCamera> m_camera;
 	};
 }

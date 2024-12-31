@@ -46,14 +46,14 @@ namespace Filbert
 
 	void PerspectiveCamera::CalculateProjection()
 	{
-		m_projection = glm::perspective(m_config.verticalFOV, m_config.aspectRatio, m_nearPlane, m_farPlane);
+		m_projection = glm::perspective(glm::radians(m_config.verticalFOV), m_config.aspectRatio, m_nearPlane, m_farPlane);
 
 		CalculateViewProjection();
 	}
 
 	void OrthographicCamera::CalculateProjection()
 	{
-		m_viewProjection = glm::ortho(m_config.left, m_config.right, m_config.bottom, m_config.top, m_nearPlane, m_farPlane);
+		m_projection = glm::ortho(m_config.left, m_config.right, m_config.bottom, m_config.top, m_nearPlane, m_farPlane);
 
 		CalculateViewProjection();
 	}
@@ -81,14 +81,39 @@ namespace Filbert
 		CalculateProjection();
 	}
 
-	void PerspectiveCamera::Config(float verticalFOV, float aspectRatio)
+	void PerspectiveCamera::Zoom(float offset)
 	{
-		m_config = { verticalFOV, aspectRatio };
+		// Zoom "flips" when going past these values
+		constexpr float minVerticalFOV = 0.0f;
+		constexpr float maxVerticalFOV = 180.0f;
+
+		m_config.verticalFOV = std::clamp(m_config.verticalFOV += offset, minVerticalFOV, maxVerticalFOV);
 
 		CalculateProjection();
 	}
 
-	void OrthographicCamera::Config(float left, float right, float bottom, float top)
+	void PerspectiveCamera::SetFOV(float verticalFOV)
+	{
+		m_config.verticalFOV = verticalFOV;
+
+		CalculateProjection();
+	}
+
+	void PerspectiveCamera::SetAspectRatio(float aspectRatio)
+	{
+		m_config.aspectRatio = aspectRatio;
+
+		CalculateProjection();
+	}
+
+	void OrthographicCamera::Zoom(float offset)
+	{
+		// TODO: Implement
+
+		CalculateProjection();
+	}
+
+	void OrthographicCamera::SetBounds(float left, float right, float bottom, float top)
 	{
 		m_config = { left, right, bottom, top };
 
