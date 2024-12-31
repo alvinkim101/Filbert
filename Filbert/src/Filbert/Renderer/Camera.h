@@ -106,5 +106,6 @@ namespace Filbert
 		inline void CalculateProjection() final;
 
 		OrthographicConfig m_config;
+		float m_zoom = 1.0f;
 	};
 }

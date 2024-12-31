@@ -87,9 +87,10 @@ namespace Filbert
 
 	bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& event)
 	{
+		constexpr float scalingFactor = 1 / 240.0f; // To roughly match PerspectiveCamera's object size
 		auto [width, height] = event.GetResolution();
 
-		// TODO: Implement
+		m_camera->SetBounds(-(width * scalingFactor), width * scalingFactor, -(height * scalingFactor), height * scalingFactor);
 		return false;
 	}
 }

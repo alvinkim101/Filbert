@@ -53,7 +53,7 @@ namespace Filbert
 
 	void OrthographicCamera::CalculateProjection()
 	{
-		m_projection = glm::ortho(m_config.left, m_config.right, m_config.bottom, m_config.top, m_nearPlane, m_farPlane);
+		m_projection = glm::ortho(m_config.left * m_zoom, m_config.right * m_zoom, m_config.bottom * m_zoom, m_config.top * m_zoom, m_nearPlane, m_farPlane);
 
 		CalculateViewProjection();
 	}
@@ -108,7 +108,11 @@ namespace Filbert
 
 	void OrthographicCamera::Zoom(float offset)
 	{
-		// TODO: Implement
+		constexpr float minZoom = 0.01f;
+		constexpr float maxZoom = 10.0f;
+
+		offset *= 0.01f; // To roughly match PerspectiveCamera's zoom speed
+		m_zoom = std::clamp(m_zoom + offset, minZoom, maxZoom);
 
 		CalculateProjection();
 	}
