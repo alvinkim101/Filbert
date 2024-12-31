@@ -1,4 +1,8 @@
-add_executable(Sandbox src/SandboxApp.cpp)
+add_executable(Sandbox
+	src/Sandbox2D.cpp
+	src/Sandbox2D.h
+	src/SandboxApp.cpp
+)
 
 target_link_libraries(Sandbox Filbert)
 

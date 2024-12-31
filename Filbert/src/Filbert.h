@@ -18,6 +18,3 @@
 #include <Filbert/Renderer/Camera.h>
 #include <Filbert/Renderer/Texture.h>
 #include <Filbert/Renderer/CameraController.h>
-
-// Entry point
-#include "Filbert/Core/EntryPoint.h"
