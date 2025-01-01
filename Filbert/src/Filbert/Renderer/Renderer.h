@@ -11,7 +11,7 @@ namespace Filbert
 	class Renderer
 	{
 	public:
-		static void Initialize() { RenderCommand::Initialize(); }
+		static void Initialize();
 
 		static void OnWindowResize(unsigned int width, unsigned int height) { RenderCommand::SetViewport(0, 0, width, height); }
 

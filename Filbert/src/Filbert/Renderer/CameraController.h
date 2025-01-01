@@ -28,7 +28,7 @@ namespace Filbert
 	public:
 		PerspectiveCameraController(const std::shared_ptr<class PerspectiveCamera>& perspectiveCamera) : m_camera(perspectiveCamera) {}
 
-		const Camera& GetCamera() const { return *m_camera.get(); }
+		const PerspectiveCamera& GetCamera() const { return *m_camera.get(); }
 
 		void OnUpdate(float deltaTime);
 		void OnEvent(Event& event);
@@ -45,7 +45,7 @@ namespace Filbert
 	public:
 		OrthographicCameraController(const std::shared_ptr<class OrthographicCamera>& orthographicCamera) : m_camera(orthographicCamera) {}
 
-		const Camera& GetCamera() const { return *m_camera.get(); }
+		const OrthographicCamera& GetCamera() const { return *m_camera.get(); }
 
 		void OnUpdate(float deltaTime);
 		void OnEvent(Event& event);

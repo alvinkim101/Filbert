@@ -14,7 +14,10 @@
 #include <Filbert/Renderer/Buffer.h>
 #include <Filbert/Renderer/VertexArray.h>
 #include <Filbert/Renderer/Shader.h>
-#include <Filbert/Renderer/Renderer.h>
-#include <Filbert/Renderer/Camera.h>
 #include <Filbert/Renderer/Texture.h>
+
+#include <Filbert/Renderer/Camera.h>
 #include <Filbert/Renderer/CameraController.h>
+
+#include <Filbert/Renderer/Renderer.h>
+#include <Filbert/Renderer/Renderer2D.h>

@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Renderer2D.h"
 
 #include <glad/gl.h>
 #include <glm/gtc/type_ptr.hpp>
@@ -6,6 +7,12 @@
 namespace Filbert
 {
 	glm::mat4 Renderer::s_viewProjection = glm::mat4(1.0f);
+
+	void Renderer::Initialize()
+	{
+		RenderCommand::Initialize();
+		Renderer2D::Initialize();
+	}
 
 	void Renderer::BeginScene(const Camera& camera)
 	{

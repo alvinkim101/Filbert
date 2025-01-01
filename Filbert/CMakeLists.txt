@@ -40,6 +40,8 @@ add_library(Filbert STATIC
 	src/Filbert/Renderer/RenderCommand.h
 	src/Filbert/Renderer/Renderer.cpp
 	src/Filbert/Renderer/Renderer.h
+	src/Filbert/Renderer/Renderer2D.cpp
+	src/Filbert/Renderer/Renderer2D.h
 	src/Filbert/Renderer/RendererAPI.cpp
 	src/Filbert/Renderer/RendererAPI.h
 	src/Filbert/Renderer/Shader.cpp
