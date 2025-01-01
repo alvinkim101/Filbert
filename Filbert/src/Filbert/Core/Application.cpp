@@ -13,6 +13,7 @@ namespace Filbert
 
 		m_window->SetEventCallback(FB_BIND_EVENT_FN(Application::OnEvent));
 
+		Renderer::Initialize();
 		ImGuiLayer::Initialize();
 	}
 
