@@ -18,9 +18,9 @@ namespace Filbert
 		void Bind() const override;
 		void Unbind() const override;
 
-		void UploadUniform(const std::string& name, const glm::mat4& matrix) override;
-		void UploadUniform(const std::string& name, const glm::vec3& vector) override;
-		void UploadUniform(const std::string& name, int integer) override;
+		void SetMat4(const std::string& name, const glm::mat4& matrix) override;
+		void SetVec3(const std::string& name, const glm::vec3& vector) override;
+		void SetInt(const std::string& name, int integer) override; // Used for textures
 
 	private:
 		std::string ReadFile(const std::string& filePath);

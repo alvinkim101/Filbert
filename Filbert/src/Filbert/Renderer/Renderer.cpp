@@ -28,8 +28,8 @@ namespace Filbert
 	{
 		shader->Bind();
 		vertexArray->Bind();
-		shader->UploadUniform(viewProjectionName, s_viewProjection);
-		shader->UploadUniform(modelName, model);
+		shader->SetMat4(viewProjectionName, s_viewProjection);
+		shader->SetMat4(modelName, model);
 
 		RenderCommand::DrawElements(vertexArray);
 	}

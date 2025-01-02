@@ -63,7 +63,7 @@ namespace Filbert
 
 		/*auto shader = m_shaderLibrary.Load("Texture", "assets/shaders/Texture.glsl");
 		m_texture = Texture2D::Create("assets/textures/reddit.png");
-		shader->UploadUniform("u_texture", 0);*/
+		shader->SetInt("u_texture", 0);*/
 	}
 
 	void Renderer2D::Deinitialize()
@@ -74,8 +74,8 @@ namespace Filbert
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		storage->shader->Bind();
-		storage->shader->UploadUniform("u_viewProjection", camera.GetViewProjection());
-		storage->shader->UploadUniform("u_model", glm::mat4(1.0f));
+		storage->shader->SetMat4("u_viewProjection", camera.GetViewProjection());
+		storage->shader->SetMat4("u_model", glm::mat4(1.0f));
 	}
 
 	void Renderer2D::EndScene()
@@ -91,7 +91,7 @@ namespace Filbert
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color)
 	{
 		storage->shader->Bind();
-		storage->shader->UploadUniform("u_color", color);
+		storage->shader->SetVec3("u_color", color);
 
 		storage->vertexArray->Bind();
 		RenderCommand::DrawElements(storage->vertexArray);

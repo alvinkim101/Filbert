@@ -15,9 +15,9 @@ namespace Filbert
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		virtual void UploadUniform(const std::string& name, const glm::mat4& matrix) = 0;
-		virtual void UploadUniform(const std::string& name, const glm::vec3& vector) = 0;
-		virtual void UploadUniform(const std::string& name, int integer) = 0;
+		virtual void SetMat4(const std::string& name, const glm::mat4& matrix) = 0;
+		virtual void SetVec3(const std::string& name, const glm::vec3& vector) = 0;
+		virtual void SetInt(const std::string& name, int integer) = 0;
 
 		static std::shared_ptr<Shader> Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
 		static std::shared_ptr<Shader> Create(const std::string& name, const std::string& filePath);
