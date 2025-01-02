@@ -4,6 +4,8 @@
 #include "Shader.h"
 #include "RenderCommand.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Filbert
 {
 	namespace
@@ -75,7 +77,6 @@ namespace Filbert
 	{
 		storage->shader->Bind();
 		storage->shader->SetMat4("u_viewProjection", camera.GetViewProjection());
-		storage->shader->SetMat4("u_model", glm::mat4(1.0f));
 	}
 
 	void Renderer2D::EndScene()
@@ -83,14 +84,21 @@ namespace Filbert
 
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec3& color)
+	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color)
 	{
-		DrawQuad(glm::vec3(position, 0.0f), size, color);
+		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec3& color)
+	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color)
 	{
 		storage->shader->Bind();
+
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, translation);
+		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(scale, 1.0f));
+
+		storage->shader->SetMat4("u_model", model);
 		storage->shader->SetVec3("u_color", color);
 
 		storage->vertexArray->Bind();
