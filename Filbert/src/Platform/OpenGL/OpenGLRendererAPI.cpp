@@ -6,6 +6,8 @@ namespace Filbert
 {
 	void OpenGLRendererAPI::Initialize()
 	{
+		glEnable(GL_DEPTH_TEST);
+
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
@@ -22,7 +24,7 @@ namespace Filbert
 
 	void OpenGLRendererAPI::Clear()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	void OpenGLRendererAPI::DrawElements(const std::shared_ptr<VertexArray>& vertexArray)
