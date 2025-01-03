@@ -16,4 +16,9 @@ namespace Filbert
 			return nullptr;
 		}
 	}
+
+	void Window::Clear()
+	{
+		RenderCommand::Clear();
+	}
 }

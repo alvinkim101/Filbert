@@ -35,7 +35,7 @@ namespace Filbert
 
 	void OpenGLWindow::Clear()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		Window::Clear();
 	}
 
 	void OpenGLWindow::SwapBuffers()
