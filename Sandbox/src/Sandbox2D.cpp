@@ -11,7 +11,7 @@
 
 void Sandbox2D::OnAttach()
 {
-
+	m_texture = Filbert::Texture2D::Create("assets/textures/reddit.png");
 }
 
 void Sandbox2D::OnDetach()
@@ -23,11 +23,6 @@ void Sandbox2D::OnUpdate(float deltaTime)
 {
 	// Camera controller update
 	m_cameraController.OnUpdate(deltaTime);
-
-	// Object transform
-	m_translation = { 5.0f, 0.0f, 0.0f };
-	m_rotation = 45.0f;
-	m_scale = { 2.0f, 2.0f };
 }
 
 void Sandbox2D::OnRender()
@@ -39,12 +34,10 @@ void Sandbox2D::OnRender()
 
 	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
 
-	Filbert::Renderer2D::DrawQuad(m_translation, m_rotation, m_scale, m_color);
+	Filbert::Renderer2D::DrawQuad({ 0.0f, 0.0f, -1.0f }, 90.0f, { 2.0f, 1.0f }, m_texture);
+	Filbert::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, 45.0f, { 1.0f, 1.0f }, m_color);
 
 	Filbert::Renderer2D::EndScene();
-
-	/*m_texture->Bind();
-	auto shader = m_shaderLibrary.Get("Texture");*/
 }
 
 void Sandbox2D::OnEvent(Filbert::Event& event)

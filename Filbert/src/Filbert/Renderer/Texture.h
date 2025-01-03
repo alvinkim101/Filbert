@@ -16,8 +16,6 @@ namespace Filbert
 	class Texture2D : public Texture
 	{
 	public:
-		void Bind(unsigned int unit = 0) const = 0;
-
 		static std::shared_ptr<Texture2D> Create(const std::string& fileName);
 	};
 }
