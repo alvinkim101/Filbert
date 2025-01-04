@@ -11,7 +11,8 @@
 
 void Sandbox2D::OnAttach()
 {
-	m_texture = Filbert::Texture2D::Create("assets/textures/reddit.png");
+	m_textures["Reddit"] = Filbert::Texture2D::Create("assets/textures/reddit.png");
+	m_textures["Snoop"] = Filbert::Texture2D::Create("assets/textures/Smoku Smoki.jpg");
 }
 
 void Sandbox2D::OnDetach()
@@ -34,8 +35,9 @@ void Sandbox2D::OnRender()
 
 	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
 
-	Filbert::Renderer2D::DrawQuad({ 0.0f, 0.0f, -1.0f }, 90.0f, { 2.0f, 1.0f }, m_texture);
-	Filbert::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, 45.0f, { 1.0f, 1.0f }, m_color);
+	Filbert::Renderer2D::DrawQuad({ 0.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_textures["Reddit"]);
+	Filbert::Renderer2D::DrawQuad({ -2.0f, 0.0f }, 45.0f, { 2.0f, 1.0f }, m_textures["Snoop"]);
+	Filbert::Renderer2D::DrawQuad({ 2.0f, 0.0f }, 135.0f, { 1.0f, 2.0f }, m_color);
 
 	Filbert::Renderer2D::EndScene();
 }

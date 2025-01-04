@@ -6,6 +6,7 @@
 
 namespace Filbert
 {
+	// Can't create static objects that log during construction since loggers won't be initialized yet.
 	class Log
 	{
 	public:

@@ -13,14 +13,18 @@ namespace Filbert
 		struct Renderer2DStorage
 		{
 			std::shared_ptr<VertexArray> vertexArray;
-			std::unordered_map<std::string, std::shared_ptr<Shader>> shaders;
+			std::shared_ptr<Shader> shader;
 		};
 
 		std::unique_ptr<Renderer2DStorage> storage;
+
+		std::shared_ptr<Texture2D> whiteTexture;
+		const glm::vec3 whiteColor = glm::vec3(1.0f);
 	}
 
 	void Renderer2D::Initialize()
 	{
+		whiteTexture = Texture2D::Create("assets/textures/White.png");
 		storage = std::make_unique<Renderer2DStorage>();
 
 		float squareVertices[] =
@@ -53,8 +57,7 @@ namespace Filbert
 		storage->vertexArray->AddVertexBuffer(vertexBuffer);
 		storage->vertexArray->SetElementBuffer(elementBuffer);
 
-		storage->shaders["Color"] = Shader::Create("Color", "assets/shaders/Color.glsl");
-		storage->shaders["Texture"] = Shader::Create("Texture", "assets/shaders/Texture.glsl");
+		storage->shader = Shader::Create("ColorTexture", "assets/shaders/ColorTexture.glsl");
 	}
 
 	void Renderer2D::Deinitialize()
@@ -64,11 +67,8 @@ namespace Filbert
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
-		for (auto& [name, shader] : storage->shaders)
-		{
-			shader->Bind();
-			shader->SetMat4("u_viewProjection", camera.GetViewProjection());
-		}
+		storage->shader->Bind();
+		storage->shader->SetMat4("u_viewProjection", camera.GetViewProjection());
 	}
 
 	void Renderer2D::EndScene()
@@ -78,40 +78,41 @@ namespace Filbert
 
 	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color)
 	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color);
+		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, whiteTexture, 0);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
 	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, texture, textureSlot);
+		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, whiteColor, texture, textureSlot);
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	{
+		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, texture, textureSlot);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color)
 	{
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, translation);
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::scale(model, glm::vec3(scale, 1.0f));
-
-		storage->shaders["Color"]->Bind();
-		storage->shaders["Color"]->SetMat4("u_model", model);
-		storage->shaders["Color"]->SetVec3("u_color", color);
-
-		storage->vertexArray->Bind();
-		RenderCommand::DrawElements(storage->vertexArray);
+		DrawQuad(translation, rotation, scale, color, whiteTexture, 0);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	{
+		DrawQuad(translation, rotation, scale, whiteColor, texture, textureSlot);
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
 	{
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, translation);
 		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
 		model = glm::scale(model, glm::vec3(scale, 1.0f));
+		storage->shader->SetMat4("u_model", model);
+
+		storage->shader->SetVec3("u_color", color);
 
 		texture->Bind(textureSlot);
-		storage->shaders["Texture"]->Bind();
-		storage->shaders["Texture"]->SetMat4("u_model", model);
-		storage->shaders["Texture"]->SetInt("u_texture", textureSlot);
+		storage->shader->SetInt("u_texture", textureSlot);
 
 		storage->vertexArray->Bind();
 		RenderCommand::DrawElements(storage->vertexArray);
