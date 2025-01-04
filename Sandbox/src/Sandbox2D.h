@@ -16,6 +16,6 @@ public:
 private:
 	Filbert::OrthographicCameraController m_cameraController{ std::make_shared<Filbert::OrthographicCamera>() };
 
-	glm::vec3 m_color = { 1.0f, 0.0f, 0.0f };
+	glm::vec4 m_color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	std::unordered_map<std::string, std::shared_ptr<Filbert::Texture2D>> m_textures;
 };

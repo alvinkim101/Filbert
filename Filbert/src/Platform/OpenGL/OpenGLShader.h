@@ -20,6 +20,7 @@ namespace Filbert
 
 		void SetMat4(const std::string& name, const glm::mat4& matrix) override;
 		void SetVec3(const std::string& name, const glm::vec3& vector) override;
+		void SetVec4(const std::string& name, const glm::vec4& vector) override;
 		void SetInt(const std::string& name, int integer) override; // Used for textures
 
 	private:

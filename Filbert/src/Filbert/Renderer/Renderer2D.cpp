@@ -19,7 +19,7 @@ namespace Filbert
 		std::unique_ptr<Renderer2DStorage> storage;
 
 		std::shared_ptr<Texture2D> whiteTexture;
-		const glm::vec3 whiteColor = glm::vec3(1.0f);
+		const glm::vec4 whiteColor = glm::vec4(1.0f);
 	}
 
 	void Renderer2D::Initialize()
@@ -79,7 +79,7 @@ namespace Filbert
 
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color)
+	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color)
 	{
 		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, whiteTexture, 0);
 	}
@@ -89,12 +89,12 @@ namespace Filbert
 		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, whiteColor, texture, textureSlot);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
 	{
 		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, texture, textureSlot);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color)
+	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color)
 	{
 		DrawQuad(translation, rotation, scale, color, whiteTexture, 0);
 	}
@@ -104,7 +104,7 @@ namespace Filbert
 		DrawQuad(translation, rotation, scale, whiteColor, texture, textureSlot);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec3& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
 	{
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, translation);
@@ -112,7 +112,7 @@ namespace Filbert
 		model = glm::scale(model, glm::vec3(scale, 1.0f));
 		storage->shader->SetMat4("u_model", model);
 
-		storage->shader->SetVec3("u_color", color);
+		storage->shader->SetVec4("u_color", color);
 
 		texture->Bind(textureSlot);
 		storage->shader->SetInt("u_texture", textureSlot);

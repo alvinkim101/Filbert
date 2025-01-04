@@ -225,6 +225,12 @@ namespace Filbert
 		glProgramUniform3fv(m_program, uniform, 1, glm::value_ptr(vector));
 	}
 
+	void OpenGLShader::SetVec4(const std::string& name, const glm::vec4& vector)
+	{
+		auto uniform = glGetUniformLocation(m_program, name.c_str());
+		glProgramUniform4fv(m_program, uniform, 1, glm::value_ptr(vector));
+	}
+
 	void OpenGLShader::SetInt(const std::string& name, int integer)
 	{
 		auto uniform = glGetUniformLocation(m_program, name.c_str());

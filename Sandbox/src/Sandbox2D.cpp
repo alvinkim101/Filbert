@@ -30,7 +30,7 @@ void Sandbox2D::OnRender()
 {
 	// Object color
 	ImGui::Begin("Settings");
-	ImGui::ColorEdit3("Color", glm::value_ptr(m_color));
+	ImGui::ColorEdit4("Color", glm::value_ptr(m_color));
 	ImGui::End();
 
 	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());

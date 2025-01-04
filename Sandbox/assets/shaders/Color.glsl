@@ -15,11 +15,11 @@ void main()
 #type fragment
 #version 460 core
 
-uniform vec3 u_color;
+uniform vec4 u_color;
 
 out vec4 f_color;
 
 void main()
 {
-	f_color = vec4(u_color, 1.0f);
+	f_color = u_color;
 }
