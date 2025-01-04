@@ -24,7 +24,10 @@ namespace Filbert
 
 	void Renderer2D::Initialize()
 	{
-		whiteTexture = Texture2D::Create("assets/textures/White.png");
+		whiteTexture = Texture2D::Create(1, 1);
+		uint32_t whiteTextureData = 0xffffffff;
+		whiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
+
 		storage = std::make_unique<Renderer2DStorage>();
 
 		float squareVertices[] =

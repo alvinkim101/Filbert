@@ -11,11 +11,14 @@ namespace Filbert
 		virtual int GetHeight() const = 0;
 
 		virtual void Bind(unsigned int unit) const = 0;
+
+		virtual void SetData(void* data, std::size_t size) = 0;
 	};
 
 	class Texture2D : public Texture
 	{
 	public:
 		static std::shared_ptr<Texture2D> Create(const std::string& fileName);
+		static std::shared_ptr<Texture2D> Create(int width, int height);
 	};
 }

@@ -19,4 +19,17 @@ namespace Filbert
 			return nullptr;
 		}
 	}
+
+	std::shared_ptr<Texture2D> Texture2D::Create(int width, int height)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::OpenGL:
+			return std::make_shared<OpenGLTexture2D>(width, height);
+
+		default:
+			FB_CORE_ASSERT(false, "Current renderer API not supported");
+			return nullptr;
+		}
+	}
 }
