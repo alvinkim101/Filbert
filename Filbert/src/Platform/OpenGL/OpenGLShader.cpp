@@ -12,6 +12,12 @@ namespace Filbert
 			{ "vertex", GL_VERTEX_SHADER },
 			{ "fragment", GL_FRAGMENT_SHADER }
 		};
+
+		const std::unordered_map<GLenum, std::string> enumToName =
+		{
+			{ GL_VERTEX_SHADER, "vertex" },
+			{ GL_FRAGMENT_SHADER, "fragment" }
+		};
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource) : m_name(name)
@@ -91,9 +97,9 @@ namespace Filbert
 			delimiterPos = end;
 		}
 
-		for (const auto& i : shaderMap)
+		for (const auto& [shaderType, shaderSource] : shaderMap)
 		{
-			FB_CORE_INFO("{}", i.second);
+			FB_CORE_INFO("{} shader\n{}", enumToName.at(shaderType), shaderSource);
 		}
 
 		FB_CORE_ASSERT(shaderMap.size(), "Shader map is empty");
