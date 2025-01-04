@@ -8,6 +8,7 @@ namespace Filbert
 {
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& fileName) : m_fileName(fileName)
 	{
+		FB_CORE_ASSERT(std::filesystem::exists(fileName), "File does not exist");
 		stbi_set_flip_vertically_on_load(true);
 		unsigned char* data = stbi_load(fileName.c_str(), &m_width, &m_height, &m_channels, 0);
 		FB_CORE_ASSERT(data, "Failed to load image");
