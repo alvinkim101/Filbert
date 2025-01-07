@@ -22,12 +22,16 @@ void Sandbox2D::OnDetach()
 
 void Sandbox2D::OnUpdate(float deltaTime)
 {
+	FB_PROFILE_FN();
+
 	// Camera controller update
 	m_cameraController.OnUpdate(deltaTime);
 }
 
 void Sandbox2D::OnRender()
 {
+	FB_PROFILE_FN();
+
 	// Object color
 	ImGui::Begin("Settings");
 	ImGui::ColorEdit4("Color", glm::value_ptr(m_color));
@@ -44,5 +48,7 @@ void Sandbox2D::OnRender()
 
 void Sandbox2D::OnEvent(Filbert::Event& event)
 {
+	FB_PROFILE_FN();
+
 	m_cameraController.OnEvent(event);
 }

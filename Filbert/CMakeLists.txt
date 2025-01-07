@@ -50,6 +50,8 @@ add_library(Filbert STATIC
 	src/Filbert/Renderer/Texture.h
 	src/Filbert/Renderer/VertexArray.cpp
 	src/Filbert/Renderer/VertexArray.h
+	src/Filbert/Utilities/Profiler.cpp
+	src/Filbert/Utilities/Profiler.h
 	src/Platform/OpenGL/OpenGLBuffer.cpp
 	src/Platform/OpenGL/OpenGLBuffer.h
 	src/Platform/OpenGL/OpenGLRendererAPI.cpp
@@ -81,5 +83,6 @@ target_include_directories(Filbert PUBLIC vendor/json/include)
 
 target_compile_definitions(Filbert PUBLIC $<$<PLATFORM_ID:Windows>:FB_PLATFORM_WINDOWS>)
 target_compile_definitions(Filbert PUBLIC $<$<CONFIG:Debug>:FB_ASSERTS_ENABLED>)
+target_compile_definitions(Filbert PUBLIC $<$<CONFIG:Debug>:FB_PROFILING_ENABLED>)
 
 target_precompile_headers(Filbert PUBLIC src/pch.h)

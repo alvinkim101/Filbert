@@ -8,3 +8,4 @@
 #include <string>
 
 #include "Filbert/Core/Log.h"
+#include "Filbert/Utilities/Profiler.h"
