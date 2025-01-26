@@ -12,6 +12,7 @@ namespace Filbert
 	{
 	public:
 		static void Initialize();
+		// TODO: Deinitialize
 
 		static void OnWindowResize(unsigned int width, unsigned int height) { RenderCommand::SetViewport(0, 0, width, height); }
 

@@ -14,6 +14,6 @@ namespace Filbert
 		void SetClearColor(const glm::vec4& color) override;
 		void Clear() override;
 
-		void DrawElements(const std::shared_ptr<VertexArray>& vertexArray) override;
+		void DrawElements(const std::shared_ptr<VertexArray>& vertexArray, unsigned int count = 0) override;
 	};
 }

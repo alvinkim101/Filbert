@@ -4,6 +4,12 @@
 
 namespace Filbert
 {
+	OpenGLVertexBuffer::OpenGLVertexBuffer(unsigned int size)
+	{
+		glCreateBuffers(1, &m_vbo);
+		glNamedBufferStorage(m_vbo, size, nullptr, GL_DYNAMIC_STORAGE_BIT);
+	}
+
 	OpenGLVertexBuffer::OpenGLVertexBuffer(void* data, unsigned int size)
 	{
 		glCreateBuffers(1, &m_vbo);
@@ -23,6 +29,11 @@ namespace Filbert
 	const BufferLayout& OpenGLVertexBuffer::GetLayout() const
 	{
 		return m_layout;
+	}
+
+	void OpenGLVertexBuffer::SetData(void* data, unsigned int size)
+	{
+		glNamedBufferSubData(m_vbo, 0, size, data);
 	}
 
 	OpenGLElementBuffer::OpenGLElementBuffer(unsigned int indices[], unsigned int size)

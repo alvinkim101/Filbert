@@ -22,7 +22,7 @@ namespace Filbert
 		virtual void SetClearColor(const glm::vec4& color) = 0;
 		virtual void Clear() = 0;
 
-		virtual void DrawElements(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+		virtual void DrawElements(const std::shared_ptr<VertexArray>& vertexArray, unsigned int count) = 0;
 
 		static API GetAPI() { return s_api; }
 		static std::unique_ptr<RendererAPI> Create();

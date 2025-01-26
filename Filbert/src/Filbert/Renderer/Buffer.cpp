@@ -4,6 +4,19 @@
 
 namespace Filbert
 {
+	std::shared_ptr<VertexBuffer> VertexBuffer::Create(unsigned int size)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::OpenGL:
+			return std::make_shared<OpenGLVertexBuffer>(size);
+
+		default:
+			FB_CORE_ASSERT(false, "Current renderer API not supported");
+			return nullptr;
+		}
+	}
+
 	std::shared_ptr<VertexBuffer> VertexBuffer::Create(void* data, unsigned int size)
 	{
 		switch (Renderer::GetAPI())

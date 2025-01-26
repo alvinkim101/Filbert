@@ -7,12 +7,15 @@ namespace Filbert
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public:
+		OpenGLVertexBuffer(unsigned int size);
 		OpenGLVertexBuffer(void* data, unsigned int size);
 		~OpenGLVertexBuffer() override;
 
 		unsigned int GetID() const override { return m_vbo; }
 		void SetLayout(const BufferLayout& layout) override;
 		const BufferLayout& GetLayout() const override;
+
+		void SetData(void* data, unsigned int size) override;
 
 	private:
 		unsigned int m_vbo = 0;
