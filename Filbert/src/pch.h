@@ -4,6 +4,7 @@
 #include <functional>
 #include <fstream>
 #include <memory>
+#include <numeric>
 #include <ranges>
 #include <string>
 

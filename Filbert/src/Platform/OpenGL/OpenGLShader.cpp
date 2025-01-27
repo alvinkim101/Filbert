@@ -236,4 +236,10 @@ namespace Filbert
 		auto uniform = glGetUniformLocation(m_program, name.c_str());
 		glProgramUniform1i(m_program, uniform, integer);
 	}
+
+	void OpenGLShader::SetInts(const std::string& name, int integers[], unsigned int count)
+	{
+		auto uniform = glGetUniformLocation(m_program, name.c_str());
+		glProgramUniform1iv(m_program, uniform, count, integers);
+	}
 }

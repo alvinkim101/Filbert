@@ -15,6 +15,7 @@ namespace Filbert
 			glm::vec3 position;
 			glm::vec4 color;
 			glm::vec2 textureCoordinates;
+			int32_t textureSlot;
 		};
 
 		struct Renderer2DData
@@ -24,6 +25,7 @@ namespace Filbert
 			static constexpr unsigned int maxQuads = 10000;
 			static constexpr unsigned int maxVertices = maxQuads * 4;
 			static constexpr unsigned int maxIndices = maxQuads * 6;
+			static constexpr unsigned int maxTextures = 32; // TODO: Query graphics API e.g. GL_MAX_TEXTURE_IMAGE_UNITS
 
 			std::shared_ptr<VertexArray> vertexArray;
 			std::shared_ptr<VertexBuffer> vertexBuffer;
@@ -32,10 +34,13 @@ namespace Filbert
 			unsigned int quadIndexCount = 0;
 			QuadVertex* quadBufferBase = nullptr;
 			QuadVertex* quadBufferOffset = nullptr;
+
+			std::unordered_map<std::shared_ptr<Texture2D>, int32_t> textures;
 		};
 
 		Renderer2DData data;
 
+		// Used when color or texture is not specified
 		std::shared_ptr<Texture2D> whiteTexture;
 		const glm::vec4 whiteColor = glm::vec4(1.0f);
 	}
@@ -45,13 +50,15 @@ namespace Filbert
 		whiteTexture = Texture2D::Create(1, 1);
 		uint32_t whiteTextureData = 0xffffffff;
 		whiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
+		data.textures[whiteTexture] = 0;
 
 		// Vertex buffer
 		BufferLayout quadLayout =
 		{
 			{ "position", ShaderDataType::Float3 },
 			{ "color", ShaderDataType::Float4 },
-			{ "textureCoordinates", ShaderDataType::Float2 }
+			{ "textureCoordinates", ShaderDataType::Float2 },
+			{ "textureSlot", ShaderDataType::Int }
 		};
 		data.quadBufferBase = new QuadVertex[Renderer2DData::maxVertices];
 		data.vertexBuffer = VertexBuffer::Create(Renderer2DData::maxVertices * sizeof(QuadVertex));
@@ -80,7 +87,12 @@ namespace Filbert
 		data.vertexArray->SetElementBuffer(elementBuffer);
 
 		// Shader
-		data.shader = Shader::Create("Color", "assets/shaders/Color.glsl");
+		data.shader = Shader::Create("Renderer2D", "assets/shaders/ColorTexture.glsl"); // TODO: Fix updated assets not being used if Sandbox is not built
+
+		// Textures
+		int slots[data.maxTextures];
+		std::iota(slots, slots + data.maxTextures, 0);
+		data.shader->SetInts("u_textures", slots, data.maxTextures);
 	}
 
 	void Renderer2D::Deinitialize()
@@ -96,12 +108,19 @@ namespace Filbert
 
 		data.quadIndexCount = 0;
 		data.quadBufferOffset = data.quadBufferBase;
+
+		data.textures[whiteTexture] = 0;
 	}
 
 	void Renderer2D::EndScene()
 	{
-		unsigned int size = (data.quadBufferOffset - data.quadBufferBase) * sizeof(QuadVertex);
+		unsigned int size = static_cast<unsigned int>((data.quadBufferOffset - data.quadBufferBase) * sizeof(QuadVertex));
 		data.vertexBuffer->SetData(data.quadBufferBase, size);
+
+		for (const auto& [texture, slot] : data.textures)
+		{
+			texture->Bind(slot);
+		}
 
 		Flush();
 	}
@@ -109,67 +128,71 @@ namespace Filbert
 	void Renderer2D::Flush()
 	{
 		RenderCommand::DrawElements(data.vertexArray, data.quadIndexCount);
+		data.textures.clear(); // Maybe cache?
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color)
 	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, whiteTexture, 0);
+		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, whiteTexture);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture2D>& texture)
 	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, whiteColor, texture, textureSlot);
+		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, whiteColor, texture);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture2D>& texture)
 	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, texture, textureSlot);
+		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, texture);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color)
 	{
-		DrawQuad(translation, rotation, scale, color, whiteTexture, 0);
+		DrawQuad(translation, rotation, scale, color, whiteTexture);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture2D>& texture)
 	{
-		DrawQuad(translation, rotation, scale, whiteColor, texture, textureSlot);
+		DrawQuad(translation, rotation, scale, whiteColor, texture);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture>& texture, unsigned int textureSlot)
+	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture2D>& texture)
 	{
+		int32_t textureSlot;
+		if (data.textures.count(texture))
+		{
+			textureSlot = data.textures[texture];
+		}
+		else
+		{
+			textureSlot = static_cast<int32_t>(data.textures.size());
+			data.textures[texture] = textureSlot;
+		}
+
 		data.quadBufferOffset->position = translation;
 		data.quadBufferOffset->color = color;
+		data.quadBufferOffset->textureCoordinates = { 0.0f, 0.0f };
+		data.quadBufferOffset->textureSlot = textureSlot;
 		data.quadBufferOffset++;
 
 		data.quadBufferOffset->position = { translation.x, translation.y + scale.y, translation.z };
 		data.quadBufferOffset->color = color;
+		data.quadBufferOffset->textureCoordinates = { 0.0f, 1.0f };
+		data.quadBufferOffset->textureSlot = textureSlot;
 		data.quadBufferOffset++;
 
 		data.quadBufferOffset->position = { translation.x + scale.x, translation.y + scale.y, translation.z };
 		data.quadBufferOffset->color = color;
+		data.quadBufferOffset->textureCoordinates = { 1.0f, 1.0f };
+		data.quadBufferOffset->textureSlot = textureSlot;
 		data.quadBufferOffset++;
 
 		data.quadBufferOffset->position = { translation.x + scale.x, translation.y, translation.z };
 		data.quadBufferOffset->color = color;
+		data.quadBufferOffset->textureCoordinates = { 1.0f, 0.0f };
+		data.quadBufferOffset->textureSlot = textureSlot;
 		data.quadBufferOffset++;
 
 		data.quadIndexCount += 6;
-
-		/*
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, translation);
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::scale(model, glm::vec3(scale, 1.0f));
-		data.shader->SetMat4("u_model", model);
-
-		data.shader->SetVec4("u_color", color);
-
-		texture->Bind(textureSlot);
-		data.shader->SetInt("u_texture", textureSlot);
-
-		data.vertexArray->Bind();
-		RenderCommand::DrawElements(data.vertexArray);
-		*/
 	}
 }

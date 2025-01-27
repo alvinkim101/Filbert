@@ -5,7 +5,8 @@ namespace Filbert
 	enum class ShaderDataType
 	{
 		None,
-		Float, Float2, Float3, Float4
+		Float, Float2, Float3, Float4,
+		Int
 	};
 
 	namespace
@@ -25,6 +26,8 @@ namespace Filbert
 				return 12;
 			case ShaderDataType::Float4:
 				return 16;
+			case ShaderDataType::Int:
+				return 4;
 
 			default:
 				FB_CORE_ASSERT(false, "Shader data type size unknown");
@@ -47,6 +50,8 @@ namespace Filbert
 				return 3;
 			case ShaderDataType::Float4:
 				return 4;
+			case ShaderDataType::Int:
+				return 1;
 
 			default:
 				FB_CORE_ASSERT(false, "Shader data type size unknown");

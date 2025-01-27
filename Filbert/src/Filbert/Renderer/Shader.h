@@ -19,6 +19,7 @@ namespace Filbert
 		virtual void SetVec3(const std::string& name, const glm::vec3& vector) = 0;
 		virtual void SetVec4(const std::string& name, const glm::vec4& vector) = 0;
 		virtual void SetInt(const std::string& name, int integer) = 0;
+		virtual void SetInts(const std::string& name, int integers[], unsigned int count) = 0;
 
 		static std::shared_ptr<Shader> Create(const std::string& name, const std::string& vertexSource, const std::string& fragmentSource);
 		static std::shared_ptr<Shader> Create(const std::string& name, const std::string& filePath);

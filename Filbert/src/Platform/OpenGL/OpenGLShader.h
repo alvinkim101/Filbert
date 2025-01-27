@@ -22,6 +22,7 @@ namespace Filbert
 		void SetVec3(const std::string& name, const glm::vec3& vector) override;
 		void SetVec4(const std::string& name, const glm::vec4& vector) override;
 		void SetInt(const std::string& name, int integer) override; // Used for textures
+		void SetInts(const std::string& name, int integers[], unsigned int count);
 
 	private:
 		std::string ReadFile(const std::string& filePath);

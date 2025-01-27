@@ -33,16 +33,16 @@ void Sandbox2D::OnRender()
 	FB_PROFILE_FN();
 
 	// Object color
-	ImGui::Begin("Settings");
-	ImGui::ColorEdit4("Color", glm::value_ptr(m_color));
+	ImGui::Begin("Color");
+	ImGui::ColorEdit4("A", glm::value_ptr(m_color[0]));
+	ImGui::ColorEdit4("B", glm::value_ptr(m_color[1]));
 	ImGui::End();
 
 	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
 
-	/*Filbert::Renderer2D::DrawQuad({ 0.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_textures["Reddit"]);
-	Filbert::Renderer2D::DrawQuad({ -2.0f, 0.0f }, 45.0f, { 2.0f, 1.0f }, m_textures["Snoop"]);*/
-	Filbert::Renderer2D::DrawQuad({ 0.0f, 0.0f }, 0.0f, { 1.0f, 1.0f }, m_color);
-	Filbert::Renderer2D::DrawQuad({ 2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_color);
+	Filbert::Renderer2D::DrawQuad({ -0.5f, -0.5f }, 0.0f, { 1.0f, 1.0f }, m_color[0]);
+	Filbert::Renderer2D::DrawQuad({ 2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_textures["Reddit"]);
+	Filbert::Renderer2D::DrawQuad({ -2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_color[1], m_textures["Snoop"]);
 
 	Filbert::Renderer2D::EndScene();
 }
