@@ -21,4 +21,7 @@ private:
 		{ 1.0f, 1.0f, 1.0f, 1.0f },
 		{ 1.0f, 1.0f, 1.0f, 1.0f }
 	};
+
+	float m_rotation = 0.0f;
+	float m_rotationSpeed = 50.0f;
 };

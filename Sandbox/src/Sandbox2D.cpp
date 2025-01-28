@@ -26,6 +26,8 @@ void Sandbox2D::OnUpdate(float deltaTime)
 
 	// Camera controller update
 	m_cameraController.OnUpdate(deltaTime);
+
+	m_rotation += m_rotationSpeed * deltaTime;
 }
 
 void Sandbox2D::OnRender()
@@ -39,8 +41,7 @@ void Sandbox2D::OnRender()
 	ImGui::End();
 
 	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
-
-	Filbert::Renderer2D::DrawQuad({ -0.5f, -0.5f }, 0.0f, { 1.0f, 1.0f }, m_color[0]);
+	Filbert::Renderer2D::DrawQuad({ -0.5f, -0.5f }, m_rotation, { 1.0f, 1.0f }, m_color[0]);
 	Filbert::Renderer2D::DrawQuad({ 2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_textures["Reddit"]);
 	Filbert::Renderer2D::DrawQuad({ -2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_color[1], m_textures["Snoop"]);
 

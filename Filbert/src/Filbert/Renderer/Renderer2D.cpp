@@ -36,6 +36,13 @@ namespace Filbert
 			QuadVertex* quadBufferOffset = nullptr;
 
 			std::unordered_map<std::shared_ptr<Texture2D>, int32_t> textures;
+
+			glm::vec4 vertexPositions[4]{ // Centered with side length 1
+				{ -0.5f, -0.5f, 0.0f, 1.0f },
+				{ -0.5f, 0.5f, 0.0f, 1.0f },
+				{ 0.5f, 0.5f, 0.0f, 1.0f },
+				{ 0.5f, -0.5f, 0.0f, 1.0f }
+			};
 		};
 
 		Renderer2DData data;
@@ -43,6 +50,8 @@ namespace Filbert
 		// Used when color or texture is not specified
 		std::shared_ptr<Texture2D> whiteTexture;
 		const glm::vec4 whiteColor = glm::vec4(1.0f);
+
+		constexpr glm::vec3 zAxis(0.0f, 0.0f, 1.0f);
 	}
 
 	void Renderer2D::Initialize()
@@ -169,25 +178,30 @@ namespace Filbert
 			data.textures[texture] = textureSlot;
 		}
 
-		data.quadBufferOffset->position = translation;
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, translation);
+		model = glm::rotate(model, glm::radians(rotation), zAxis);
+		model = glm::scale(model, { scale, 1.0f });
+
+		data.quadBufferOffset->position = model * data.vertexPositions[0];
 		data.quadBufferOffset->color = color;
 		data.quadBufferOffset->textureCoordinates = { 0.0f, 0.0f };
 		data.quadBufferOffset->textureSlot = textureSlot;
 		data.quadBufferOffset++;
 
-		data.quadBufferOffset->position = { translation.x, translation.y + scale.y, translation.z };
+		data.quadBufferOffset->position = model * data.vertexPositions[1];
 		data.quadBufferOffset->color = color;
 		data.quadBufferOffset->textureCoordinates = { 0.0f, 1.0f };
 		data.quadBufferOffset->textureSlot = textureSlot;
 		data.quadBufferOffset++;
 
-		data.quadBufferOffset->position = { translation.x + scale.x, translation.y + scale.y, translation.z };
+		data.quadBufferOffset->position = model * data.vertexPositions[2];
 		data.quadBufferOffset->color = color;
 		data.quadBufferOffset->textureCoordinates = { 1.0f, 1.0f };
 		data.quadBufferOffset->textureSlot = textureSlot;
 		data.quadBufferOffset++;
 
-		data.quadBufferOffset->position = { translation.x + scale.x, translation.y, translation.z };
+		data.quadBufferOffset->position = model * data.vertexPositions[3];
 		data.quadBufferOffset->color = color;
 		data.quadBufferOffset->textureCoordinates = { 1.0f, 0.0f };
 		data.quadBufferOffset->textureSlot = textureSlot;
