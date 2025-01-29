@@ -43,6 +43,8 @@ namespace Filbert
 				{ 0.5f, 0.5f, 0.0f, 1.0f },
 				{ 0.5f, -0.5f, 0.0f, 1.0f }
 			};
+
+			Renderer2D::Stats stats;
 		};
 
 		Renderer2DData data;
@@ -72,6 +74,7 @@ namespace Filbert
 		data.quadBufferBase = new QuadVertex[Renderer2DData::maxVertices];
 		data.vertexBuffer = VertexBuffer::Create(Renderer2DData::maxVertices * sizeof(QuadVertex));
 		data.vertexBuffer->SetLayout(quadLayout);
+		data.quadBufferOffset = data.quadBufferBase;
 
 		// Element buffer
 		unsigned int* quadIndices = new unsigned int[Renderer2DData::maxIndices];
@@ -114,14 +117,14 @@ namespace Filbert
 		data.vertexArray->Bind();
 		data.shader->Bind();
 		data.shader->SetMat4("u_viewProjection", camera.GetViewProjection());
-
-		data.quadIndexCount = 0;
-		data.quadBufferOffset = data.quadBufferBase;
-
-		data.textures[whiteTexture] = 0;
 	}
 
 	void Renderer2D::EndScene()
+	{
+		Flush();
+	}
+
+	void Renderer2D::Flush()
 	{
 		unsigned int size = static_cast<unsigned int>((data.quadBufferOffset - data.quadBufferBase) * sizeof(QuadVertex));
 		data.vertexBuffer->SetData(data.quadBufferBase, size);
@@ -131,13 +134,14 @@ namespace Filbert
 			texture->Bind(slot);
 		}
 
-		Flush();
-	}
-
-	void Renderer2D::Flush()
-	{
 		RenderCommand::DrawElements(data.vertexArray, data.quadIndexCount);
+
 		data.textures.clear(); // Maybe cache?
+		data.quadIndexCount = 0;
+		data.quadBufferOffset = data.quadBufferBase;
+		data.textures[whiteTexture] = 0;
+
+		data.stats.drawCalls++;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color)
@@ -167,6 +171,11 @@ namespace Filbert
 
 	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture2D>& texture)
 	{
+		if (data.quadIndexCount == data.maxIndices)
+		{
+			Flush();
+		}
+
 		int32_t textureSlot;
 		if (data.textures.count(texture))
 		{
@@ -179,9 +188,9 @@ namespace Filbert
 		}
 
 		glm::mat4 model(1.0f);
-		model = glm::translate(model, translation);
-		model = glm::rotate(model, glm::radians(rotation), zAxis);
-		model = glm::scale(model, { scale, 1.0f });
+		model = glm::translate(model, translation)
+			* glm::rotate(model, glm::radians(rotation), zAxis)
+			* glm::scale(model, { scale, 1.0f });
 
 		data.quadBufferOffset->position = model * data.vertexPositions[0];
 		data.quadBufferOffset->color = color;
@@ -208,5 +217,17 @@ namespace Filbert
 		data.quadBufferOffset++;
 
 		data.quadIndexCount += 6;
+
+		data.stats.quadCount++;
+	}
+
+	Renderer2D::Stats Renderer2D::GetStats()
+	{
+		return data.stats;
+	}
+
+	void Renderer2D::ResetStats()
+	{
+		memset(&data.stats, 0, sizeof(Renderer2D::Stats));
 	}
 }

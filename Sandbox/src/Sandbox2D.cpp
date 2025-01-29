@@ -24,28 +24,33 @@ void Sandbox2D::OnUpdate(float deltaTime)
 {
 	FB_PROFILE_FN();
 
-	// Camera controller update
 	m_cameraController.OnUpdate(deltaTime);
 
 	m_rotation += m_rotationSpeed * deltaTime;
+
+	Filbert::Renderer2D::ResetStats();
 }
 
 void Sandbox2D::OnRender()
 {
 	FB_PROFILE_FN();
 
-	// Object color
+	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
+	Filbert::Renderer2D::DrawQuad({ -0.5f, -0.5f }, m_rotation, { 1.0f, 1.0f }, m_color[0]);
+	Filbert::Renderer2D::DrawQuad({ 2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_textures["Reddit"]);
+	Filbert::Renderer2D::DrawQuad({ -2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_color[1], m_textures["Snoop"]);
+	Filbert::Renderer2D::EndScene();
+
 	ImGui::Begin("Color");
 	ImGui::ColorEdit4("A", glm::value_ptr(m_color[0]));
 	ImGui::ColorEdit4("B", glm::value_ptr(m_color[1]));
 	ImGui::End();
 
-	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
-	Filbert::Renderer2D::DrawQuad({ -0.5f, -0.5f }, m_rotation, { 1.0f, 1.0f }, m_color[0]);
-	Filbert::Renderer2D::DrawQuad({ 2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_textures["Reddit"]);
-	Filbert::Renderer2D::DrawQuad({ -2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_color[1], m_textures["Snoop"]);
-
-	Filbert::Renderer2D::EndScene();
+	auto stats = Filbert::Renderer2D::GetStats();
+	ImGui::Begin("Stats");
+	ImGui::Text("Draw calls %u", stats.drawCalls);
+	ImGui::Text("Quad count %u", stats.quadCount);
+	ImGui::End();
 }
 
 void Sandbox2D::OnEvent(Filbert::Event& event)
