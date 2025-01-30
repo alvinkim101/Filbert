@@ -27,6 +27,14 @@ namespace Filbert
 			static constexpr unsigned int maxIndices = maxQuads * 6;
 			static constexpr unsigned int maxTextures = 32; // TODO: Query graphics API e.g. GL_MAX_TEXTURE_IMAGE_UNITS
 
+			static constexpr unsigned int quadVertexCount = 4;
+			static constexpr glm::vec2 textureCoordinates[]{
+				{ 0.0f, 0.0f },
+				{ 1.0f, 0.0f },
+				{ 1.0f, 1.0f },
+				{ 0.0f, 1.0f }
+			};
+
 			std::shared_ptr<VertexArray> vertexArray;
 			std::shared_ptr<VertexBuffer> vertexBuffer;
 			std::shared_ptr<Shader> shader;
@@ -192,29 +200,14 @@ namespace Filbert
 			* glm::rotate(model, glm::radians(rotation), zAxis)
 			* glm::scale(model, { scale, 1.0f });
 
-		data.quadBufferOffset->position = model * data.vertexPositions[0];
-		data.quadBufferOffset->color = color;
-		data.quadBufferOffset->textureCoordinates = { 0.0f, 0.0f };
-		data.quadBufferOffset->textureSlot = textureSlot;
-		data.quadBufferOffset++;
-
-		data.quadBufferOffset->position = model * data.vertexPositions[1];
-		data.quadBufferOffset->color = color;
-		data.quadBufferOffset->textureCoordinates = { 0.0f, 1.0f };
-		data.quadBufferOffset->textureSlot = textureSlot;
-		data.quadBufferOffset++;
-
-		data.quadBufferOffset->position = model * data.vertexPositions[2];
-		data.quadBufferOffset->color = color;
-		data.quadBufferOffset->textureCoordinates = { 1.0f, 1.0f };
-		data.quadBufferOffset->textureSlot = textureSlot;
-		data.quadBufferOffset++;
-
-		data.quadBufferOffset->position = model * data.vertexPositions[3];
-		data.quadBufferOffset->color = color;
-		data.quadBufferOffset->textureCoordinates = { 1.0f, 0.0f };
-		data.quadBufferOffset->textureSlot = textureSlot;
-		data.quadBufferOffset++;
+		for (unsigned int i = 0; i < data.quadVertexCount; i++)
+		{
+			data.quadBufferOffset->position = model * data.vertexPositions[i];
+			data.quadBufferOffset->color = color;
+			data.quadBufferOffset->textureCoordinates = data.textureCoordinates[i];
+			data.quadBufferOffset->textureSlot = textureSlot;
+			data.quadBufferOffset++;
+		}
 
 		data.quadIndexCount += 6;
 
