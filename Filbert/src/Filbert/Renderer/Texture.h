@@ -9,6 +9,7 @@ namespace Filbert
 
 		virtual int GetWidth() const = 0;
 		virtual int GetHeight() const = 0;
+		std::pair<int, int> GetDimensions() const { return { GetWidth(), GetHeight() }; }
 
 		virtual void Bind(unsigned int unit) const = 0;
 

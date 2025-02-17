@@ -8,6 +8,15 @@
 
 namespace Filbert
 {
+	std::shared_ptr<Texture2D> Renderer2D::s_whiteTexture;
+	const glm::vec4 Renderer2D::s_whiteColor{ 1.0f };
+	const std::array<glm::vec2, 4> Renderer2D::s_defaultTextureCoordinates {
+		glm::vec2{ 0.0f, 0.0f },
+		glm::vec2{ 1.0f, 0.0f },
+		glm::vec2{ 1.0f, 1.0f },
+		glm::vec2{ 0.0f, 1.0f }
+	};
+
 	namespace
 	{
 		struct QuadVertex
@@ -27,29 +36,22 @@ namespace Filbert
 			static constexpr unsigned int maxIndices = maxQuads * 6;
 			static constexpr unsigned int maxTextures = 32; // TODO: Query graphics API e.g. GL_MAX_TEXTURE_IMAGE_UNITS
 
-			static constexpr unsigned int quadVertexCount = 4;
-			static constexpr glm::vec2 textureCoordinates[]{
-				{ 0.0f, 0.0f },
-				{ 1.0f, 0.0f },
-				{ 1.0f, 1.0f },
-				{ 0.0f, 1.0f }
-			};
-
 			std::shared_ptr<VertexArray> vertexArray;
 			std::shared_ptr<VertexBuffer> vertexBuffer;
 			std::shared_ptr<Shader> shader;
+			std::unordered_map<std::shared_ptr<Texture2D>, int32_t> textures;
 
 			unsigned int quadIndexCount = 0;
 			QuadVertex* quadBufferBase = nullptr;
 			QuadVertex* quadBufferOffset = nullptr;
 
-			std::unordered_map<std::shared_ptr<Texture2D>, int32_t> textures;
-
-			glm::vec4 vertexPositions[4]{ // Centered with side length 1
+			// Counter clockwise starting from bottom left
+			// Centered with side length 1
+			glm::vec4 vertexPositions[4] {
 				{ -0.5f, -0.5f, 0.0f, 1.0f },
-				{ -0.5f, 0.5f, 0.0f, 1.0f },
+				{ 0.5f, -0.5f, 0.0f, 1.0f },
 				{ 0.5f, 0.5f, 0.0f, 1.0f },
-				{ 0.5f, -0.5f, 0.0f, 1.0f }
+				{ -0.5f, 0.5f, 0.0f, 1.0f }
 			};
 
 			Renderer2D::Stats stats;
@@ -57,19 +59,15 @@ namespace Filbert
 
 		Renderer2DData data;
 
-		// Used when color or texture is not specified
-		std::shared_ptr<Texture2D> whiteTexture;
-		const glm::vec4 whiteColor = glm::vec4(1.0f);
-
 		constexpr glm::vec3 zAxis(0.0f, 0.0f, 1.0f);
 	}
 
 	void Renderer2D::Initialize()
 	{
-		whiteTexture = Texture2D::Create(1, 1);
+		s_whiteTexture = Texture2D::Create(1, 1);
 		uint32_t whiteTextureData = 0xffffffff;
-		whiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
-		data.textures[whiteTexture] = 0;
+		s_whiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
+		data.textures[s_whiteTexture] = 0;
 
 		// Vertex buffer
 		BufferLayout quadLayout =
@@ -147,38 +145,15 @@ namespace Filbert
 		data.textures.clear(); // Maybe cache?
 		data.quadIndexCount = 0;
 		data.quadBufferOffset = data.quadBufferBase;
-		data.textures[whiteTexture] = 0;
+		data.textures[s_whiteTexture] = 0;
 
 		data.stats.drawCalls++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::vec3& translation /* Z used for depth */, const float rotation /* degrees */, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture2D> texture, const std::array<glm::vec2, 4>& textureCoordinates)
 	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, whiteTexture);
-	}
+		FB_CORE_ASSERT(texture, "Null texture");
 
-	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture2D>& texture)
-	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, whiteColor, texture);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec2& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture2D>& texture)
-	{
-		DrawQuad(glm::vec3(translation, 0.0f), rotation, scale, color, texture);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color)
-	{
-		DrawQuad(translation, rotation, scale, color, whiteTexture);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const std::shared_ptr<Texture2D>& texture)
-	{
-		DrawQuad(translation, rotation, scale, whiteColor, texture);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3& translation, const float rotation, const glm::vec2& scale, const glm::vec4& color, const std::shared_ptr<Texture2D>& texture)
-	{
 		if (data.quadIndexCount == data.maxIndices)
 		{
 			Flush();
@@ -200,11 +175,11 @@ namespace Filbert
 			* glm::rotate(model, glm::radians(rotation), zAxis)
 			* glm::scale(model, { scale, 1.0f });
 
-		for (unsigned int i = 0; i < data.quadVertexCount; i++)
+		for (unsigned int i = 0; i < 4; i++)
 		{
 			data.quadBufferOffset->position = model * data.vertexPositions[i];
 			data.quadBufferOffset->color = color;
-			data.quadBufferOffset->textureCoordinates = data.textureCoordinates[i];
+			data.quadBufferOffset->textureCoordinates = textureCoordinates[i];
 			data.quadBufferOffset->textureSlot = textureSlot;
 			data.quadBufferOffset++;
 		}

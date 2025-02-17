@@ -13,6 +13,10 @@ void Sandbox2D::OnAttach()
 {
 	m_textures["Reddit"] = Filbert::Texture2D::Create("assets/textures/reddit.png");
 	m_textures["Snoop"] = Filbert::Texture2D::Create("assets/textures/Smoku Smoki.jpg");
+
+	std::shared_ptr<Filbert::Texture2D> cityTexture = Filbert::Texture2D::Create("assets/textures/kenney_roguelike-modern-city/Tilemap/tilemap_packed.png");
+	m_textureAtlases["City"] = std::make_shared<Filbert::TextureAtlas>(cityTexture, glm::vec2(16, 16));
+	m_subTextures["Field"] = std::make_shared<Filbert::SubTexture2D>(m_textureAtlases["City"], glm::uvec2(0, 0), glm::uvec2(3, 3));
 }
 
 void Sandbox2D::OnDetach()
@@ -35,6 +39,7 @@ void Sandbox2D::OnRender()
 {
 	FB_PROFILE_FN();
 
+	/*
 	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
 	Filbert::Renderer2D::DrawQuad({ -0.5f, -0.5f }, m_rotation, { 1.0f, 1.0f }, m_color[0]);
 	Filbert::Renderer2D::DrawQuad({ 2.0f, 2.0f }, 0.0f, { 1.0f, 1.0f }, m_textures["Reddit"]);
@@ -45,6 +50,11 @@ void Sandbox2D::OnRender()
 	ImGui::ColorEdit4("A", glm::value_ptr(m_color[0]));
 	ImGui::ColorEdit4("B", glm::value_ptr(m_color[1]));
 	ImGui::End();
+	*/
+
+	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
+	Filbert::Renderer2D::DrawQuad({ 0.0f, 0.0f }, 0.0f, { 1.0f, 1.0f }, m_subTextures["Field"]);
+	Filbert::Renderer2D::EndScene();
 
 	auto stats = Filbert::Renderer2D::GetStats();
 	ImGui::Begin("Stats");

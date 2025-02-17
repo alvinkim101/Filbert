@@ -46,6 +46,8 @@ add_library(Filbert STATIC
 	src/Filbert/Renderer/RendererAPI.h
 	src/Filbert/Renderer/Shader.cpp
 	src/Filbert/Renderer/Shader.h
+	src/Filbert/Renderer/SubTexture.cpp
+	src/Filbert/Renderer/SubTexture.h
 	src/Filbert/Renderer/Texture.cpp
 	src/Filbert/Renderer/Texture.h
 	src/Filbert/Renderer/VertexArray.cpp
