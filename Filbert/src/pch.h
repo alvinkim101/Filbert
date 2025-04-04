@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <functional>
 #include <fstream>
+#include <mdspan>
 #include <memory>
 #include <numeric>
 #include <ranges>
