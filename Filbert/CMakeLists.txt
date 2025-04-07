@@ -36,6 +36,8 @@ add_library(Filbert STATIC
 	src/Filbert/Renderer/Camera.h
 	src/Filbert/Renderer/CameraController.cpp
 	src/Filbert/Renderer/CameraController.h
+	src/Filbert/Renderer/Framebuffer.cpp
+	src/Filbert/Renderer/Framebuffer.h
 	src/Filbert/Renderer/RenderCommand.cpp
 	src/Filbert/Renderer/RenderCommand.h
 	src/Filbert/Renderer/Renderer.cpp
@@ -56,6 +58,8 @@ add_library(Filbert STATIC
 	src/Filbert/Utilities/Profiler.h
 	src/Platform/OpenGL/OpenGLBuffer.cpp
 	src/Platform/OpenGL/OpenGLBuffer.h
+	src/Platform/OpenGL/OpenGLFramebuffer.cpp
+	src/Platform/OpenGL/OpenGLFramebuffer.h
 	src/Platform/OpenGL/OpenGLRendererAPI.cpp
 	src/Platform/OpenGL/OpenGLRendererAPI.h
 	src/Platform/OpenGL/OpenGLShader.cpp

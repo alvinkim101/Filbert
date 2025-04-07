@@ -32,6 +32,9 @@ private:
 	float m_rotation = 0.0f;
 	float m_rotationSpeed = 50.0f;
 
+	// Framebuffer
+	std::shared_ptr<Filbert::Framebuffer> m_frameBuffer;
+
 	// Tile map
 	const char* m_tileMap;
 	uint16_t m_tileMapWidth = 0;

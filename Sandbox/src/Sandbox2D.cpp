@@ -19,6 +19,11 @@ Sandbox2D::Sandbox2D() : Layer("Sandbox2D")
 	m_subTextures["Grass"] = std::make_shared<Filbert::SubTexture2D>(m_textureAtlases["City"], glm::uvec2(1, 1));
 	m_subTextures["Dirt"] = std::make_shared<Filbert::SubTexture2D>(m_textureAtlases["City"], glm::uvec2(11, 1));
 
+	Filbert::FramebufferSpec frameBufferSpec;
+	frameBufferSpec.width = 1280;
+	frameBufferSpec.height = 720;
+	m_frameBuffer = Filbert::Framebuffer::Create(frameBufferSpec);
+
 	const char* happyFace =
 	{
 		"XXXXXXXX"
@@ -62,6 +67,8 @@ void Sandbox2D::OnRender()
 {
 	FB_PROFILE_FN();
 
+	m_frameBuffer->Bind();
+	Filbert::RenderCommand::Clear();
 	Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
 
 	/*
@@ -78,6 +85,11 @@ void Sandbox2D::OnRender()
 	DrawTileMap();
 
 	Filbert::Renderer2D::EndScene();
+	m_frameBuffer->Unbind();
+
+	ImVec2 upperLeft(0.0f, 1.0f);
+	ImVec2 bottomRight(1.0f, 0.0f);
+	ImGui::Image(m_frameBuffer->GetColorAttachment(), ImVec2(1280, 720), upperLeft, bottomRight); // UL and BR because image is flipped
 
 	auto stats = Filbert::Renderer2D::GetStats();
 	ImGui::Begin("Stats");

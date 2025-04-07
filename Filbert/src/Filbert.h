@@ -16,6 +16,7 @@
 #include <Filbert/Renderer/Shader.h>
 #include <Filbert/Renderer/Texture.h>
 #include <Filbert/Renderer/SubTexture.h>
+#include <Filbert/Renderer/Framebuffer.h>
 
 #include <Filbert/Renderer/Camera.h>
 #include <Filbert/Renderer/CameraController.h>
