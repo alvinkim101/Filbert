@@ -6,11 +6,12 @@ namespace Filbert
 {
 	Application* Application::s_application = nullptr;
 
-	Application::Application()
+	Application::Application(std::string_view windowName)
 	{
 		FB_CORE_ASSERT(!s_application, "More than one application created");
 		s_application = this;
 
+		m_window = Window::Create(WindowProps(windowName));
 		m_window->SetEventCallback(FB_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Initialize();

@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Core.h"
 #include "Filbert/Events/Event.h"
-#include "pch.h"
 
 namespace Filbert
 {
@@ -11,8 +9,8 @@ namespace Filbert
 		std::string title;
 		unsigned int width, height;
 
-		WindowProps(const std::string& title = "Filbert Engine", unsigned int width = 1920, unsigned int height = 1080)
-			: title(title), width(width), height(height) {}
+		WindowProps(std::string_view title, unsigned int width = 1920, unsigned int height = 1080)
+			: title(std::string(title)), width(width), height(height) {}
 	};
 
 	class Window
@@ -38,6 +36,6 @@ namespace Filbert
 
 		virtual void* GetNativeWindow() = 0;
 
-		static std::unique_ptr<Window> Create(const WindowProps& props = WindowProps());
+		static std::unique_ptr<Window> Create(const WindowProps& props);
 	};
 }

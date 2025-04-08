@@ -12,7 +12,7 @@ namespace Filbert
 	class Application
 	{
 	public:
-		Application();
+		Application(std::string_view windowName = "Filbert");
 		virtual ~Application();
 
 		void Run();
@@ -37,7 +37,7 @@ namespace Filbert
 		bool OnWindowResizeEvent(WindowResizeEvent& event);
 
 		static Application* s_application;
-		std::unique_ptr<Window> m_window{ Window::Create() };
+		std::unique_ptr<Window> m_window;
 		LayerStack m_layerStack;
 		bool m_running = true;
 		bool m_minimized = false;
