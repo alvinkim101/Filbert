@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8") # Unicode support requires comp
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
 add_subdirectory(Filbert)
+add_subdirectory(Editor)
 add_subdirectory(Sandbox)
 
-set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
+set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Editor)
