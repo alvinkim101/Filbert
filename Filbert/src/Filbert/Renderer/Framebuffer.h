@@ -14,6 +14,8 @@ namespace Filbert
 		Framebuffer(const FramebufferSpec& spec) : m_frameBufferSpec(spec) {}
 		virtual ~Framebuffer() = default;
 
+		virtual void Recreate(const FramebufferSpec& spec) = 0;
+
 		virtual void Bind() = 0;
 		virtual void Unbind() = 0;
 

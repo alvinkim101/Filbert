@@ -6,7 +6,38 @@ namespace Filbert
 {
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpec& spec) : Framebuffer(spec)
 	{
-		// DSA https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions?tab=readme-ov-file#glframebuffer
+		Create();
+	}
+
+	OpenGLFramebuffer::~OpenGLFramebuffer()
+	{
+		Destroy();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void OpenGLFramebuffer::Recreate(const FramebufferSpec& spec)
+	{
+		m_frameBufferSpec = spec;
+
+		Destroy();
+		Create();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0); // Maybe bind to the new framebuffer if it was bound before?
+	}
+
+	void OpenGLFramebuffer::Bind()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
+	}
+
+	void OpenGLFramebuffer::Unbind()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void OpenGLFramebuffer::Create()
+	{
+		// Direct State Access https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions?tab=readme-ov-file#glframebuffer
 
 		// Framebuffer
 		glCreateFramebuffers(1, &m_frameBuffer);
@@ -24,19 +55,8 @@ namespace Filbert
 		FB_CORE_ASSERT(glCheckNamedFramebufferStatus(m_frameBuffer, GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer not completed: {}", glCheckNamedFramebufferStatus(m_frameBuffer, GL_FRAMEBUFFER));
 	}
 
-	OpenGLFramebuffer::~OpenGLFramebuffer()
+	void OpenGLFramebuffer::Destroy()
 	{
 		glDeleteFramebuffers(1, &m_frameBuffer);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
-
-	void OpenGLFramebuffer::Bind()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
-	}
-
-	void OpenGLFramebuffer::Unbind()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 }

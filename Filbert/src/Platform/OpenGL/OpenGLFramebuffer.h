@@ -10,6 +10,8 @@ namespace Filbert
 		OpenGLFramebuffer(const FramebufferSpec& spec);
 		~OpenGLFramebuffer();
 
+		void Recreate(const FramebufferSpec& spec) override;
+
 		void Bind() override;
 		void Unbind() override;
 
@@ -17,6 +19,9 @@ namespace Filbert
 		unsigned int GetDepthStencilAttachment() override { return m_depthStencilAttachment; }
 
 	private:
+		void Create();
+		void Destroy();
+
 		unsigned int m_frameBuffer{};
 		unsigned int m_colorAttachment{};
 		unsigned int m_depthStencilAttachment{};
