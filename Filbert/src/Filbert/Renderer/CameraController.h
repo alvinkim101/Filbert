@@ -50,6 +50,9 @@ namespace Filbert
 		void OnUpdate(float deltaTime);
 		void OnEvent(Event& event);
 
+	public:
+		void ResizeWindow(unsigned int width, unsigned int height);
+
 	private:
 		bool OnMouseScroll(MouseScrollEvent& event);
 		bool OnWindowResize(WindowResizeEvent& event);

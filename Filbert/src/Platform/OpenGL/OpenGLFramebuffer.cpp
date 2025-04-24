@@ -17,7 +17,7 @@ namespace Filbert
 
 	void OpenGLFramebuffer::Recreate(const FramebufferSpec& spec)
 	{
-		m_frameBufferSpec = spec;
+		m_framebufferSpec = spec;
 
 		Destroy();
 		Create();
@@ -27,7 +27,7 @@ namespace Filbert
 
 	void OpenGLFramebuffer::Bind()
 	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_frameBuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
 	}
 
 	void OpenGLFramebuffer::Unbind()
@@ -40,23 +40,26 @@ namespace Filbert
 		// Direct State Access https://github.com/fendevel/Guide-to-Modern-OpenGL-Functions?tab=readme-ov-file#glframebuffer
 
 		// Framebuffer
-		glCreateFramebuffers(1, &m_frameBuffer);
+		glCreateFramebuffers(1, &m_framebuffer);
 
 		// Color attachment
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_colorAttachment);
-		glTextureStorage2D(m_colorAttachment, 1, GL_RGBA8, m_frameBufferSpec.width, m_frameBufferSpec.height);
-		glNamedFramebufferTexture(m_frameBuffer, GL_COLOR_ATTACHMENT0, m_colorAttachment, 0);
+		glTextureStorage2D(m_colorAttachment, 1, GL_RGBA8, m_framebufferSpec.width, m_framebufferSpec.height);
+		glNamedFramebufferTexture(m_framebuffer, GL_COLOR_ATTACHMENT0, m_colorAttachment, 0);
 
 		// Depth + stencil attachment
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_depthStencilAttachment);
-		glTextureStorage2D(m_depthStencilAttachment, 1, GL_DEPTH24_STENCIL8, m_frameBufferSpec.width, m_frameBufferSpec.height);
-		glNamedFramebufferTexture(m_frameBuffer, GL_DEPTH_STENCIL_ATTACHMENT, m_depthStencilAttachment, 0);
+		glTextureStorage2D(m_depthStencilAttachment, 1, GL_DEPTH24_STENCIL8, m_framebufferSpec.width, m_framebufferSpec.height);
+		glNamedFramebufferTexture(m_framebuffer, GL_DEPTH_STENCIL_ATTACHMENT, m_depthStencilAttachment, 0);
 
-		FB_CORE_ASSERT(glCheckNamedFramebufferStatus(m_frameBuffer, GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer not completed: {}", glCheckNamedFramebufferStatus(m_frameBuffer, GL_FRAMEBUFFER));
+		auto status = glCheckNamedFramebufferStatus(m_framebuffer, GL_FRAMEBUFFER);
+		FB_CORE_ASSERT(status == GL_FRAMEBUFFER_COMPLETE, "Framebuffer not completed: {}", status);
+
+		glViewport(0, 0, m_framebufferSpec.width, m_framebufferSpec.height);
 	}
 
 	void OpenGLFramebuffer::Destroy()
 	{
-		glDeleteFramebuffers(1, &m_frameBuffer);
+		glDeleteFramebuffers(1, &m_framebuffer);
 	}
 }

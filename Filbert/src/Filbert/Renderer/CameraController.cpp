@@ -78,6 +78,12 @@ namespace Filbert
 		dispatcher.Dispatch<WindowResizeEvent>(FB_BIND_EVENT_FN(OrthographicCameraController::OnWindowResize));
 	}
 
+	void OrthographicCameraController::ResizeWindow(unsigned int width, unsigned int height)
+	{
+		constexpr float scalingFactor = 1 / 240.0f; // To roughly match PerspectiveCamera's object size
+		m_camera->SetBounds(-(width * scalingFactor), width * scalingFactor, -(height * scalingFactor), height * scalingFactor);
+	}
+
 	bool OrthographicCameraController::OnMouseScroll(MouseScrollEvent& event)
 	{
 		float offset = -event.GetYOffset();
@@ -87,10 +93,9 @@ namespace Filbert
 
 	bool OrthographicCameraController::OnWindowResize(WindowResizeEvent& event)
 	{
-		constexpr float scalingFactor = 1 / 240.0f; // To roughly match PerspectiveCamera's object size
 		auto [width, height] = event.GetResolution();
-
-		m_camera->SetBounds(-(width * scalingFactor), width * scalingFactor, -(height * scalingFactor), height * scalingFactor);
+		ResizeWindow(width, height);
+		
 		return false;
 	}
 }

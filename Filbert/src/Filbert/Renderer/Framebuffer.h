@@ -11,7 +11,7 @@ namespace Filbert
 	class Framebuffer
 	{
 	public:
-		Framebuffer(const FramebufferSpec& spec) : m_frameBufferSpec(spec) {}
+		Framebuffer(const FramebufferSpec& spec) : m_framebufferSpec(spec) {}
 		virtual ~Framebuffer() = default;
 
 		virtual void Recreate(const FramebufferSpec& spec) = 0;
@@ -22,11 +22,11 @@ namespace Filbert
 		virtual unsigned int GetColorAttachment() = 0;
 		virtual unsigned int GetDepthStencilAttachment() = 0;
 
-		const FramebufferSpec& GetSpecification() const { return m_frameBufferSpec; }
+		const FramebufferSpec& GetSpecification() const { return m_framebufferSpec; }
 
 		static std::shared_ptr<Framebuffer> Create(const FramebufferSpec& spec);
 
 	protected:
-		FramebufferSpec m_frameBufferSpec;
+		FramebufferSpec m_framebufferSpec;
 	};
 }

@@ -22,7 +22,7 @@ namespace Filbert
 		void Create();
 		void Destroy();
 
-		unsigned int m_frameBuffer{};
+		unsigned int m_framebuffer{};
 		unsigned int m_colorAttachment{};
 		unsigned int m_depthStencilAttachment{};
 	};
