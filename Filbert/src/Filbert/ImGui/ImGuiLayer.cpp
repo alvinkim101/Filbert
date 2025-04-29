@@ -9,6 +9,31 @@
 
 namespace Filbert
 {
+	void ImGuiLayer::OnAttach()
+	{
+		Initialize();
+	}
+
+	void ImGuiLayer::OnDetach()
+	{
+		Deinitialize();
+	}
+
+	void ImGuiLayer::OnUpdate(float deltaTime)
+	{
+
+	}
+
+	void ImGuiLayer::OnRender()
+	{
+
+	}
+
+	void ImGuiLayer::OnEvent(Event& event)
+	{
+
+	}
+
 	void ImGuiLayer::Initialize()
 	{
 		GLFWwindow* window = static_cast<GLFWwindow*>(Application::GetApplication().GetWindow().GetNativeWindow());

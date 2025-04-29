@@ -2,8 +2,8 @@
 
 enum
 {
-	Layers,
-	Overlays
+	Layers = 0,
+	Overlays = 1
 };
 
 namespace Filbert

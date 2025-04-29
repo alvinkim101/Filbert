@@ -1,14 +1,23 @@
 #pragma once
 
+#include <Filbert/Core/Layer.h>
+
 namespace Filbert
 {
-	class ImGuiLayer
+	class ImGuiLayer : public Layer
 	{
 	public:
-		static void Initialize();
-		static void Deinitialize();
+		void OnAttach() override;
+		void OnDetach() override;
+		void OnUpdate(float deltaTime) override;
+		void OnRender() override;
+		void OnEvent(Event& event) override;
 
 		static void NewFrame();
 		static void Render();
+
+	private:
+		static void Initialize();
+		static void Deinitialize();
 	};
 }

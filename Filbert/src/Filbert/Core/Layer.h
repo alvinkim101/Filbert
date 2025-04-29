@@ -9,7 +9,7 @@ namespace Filbert
 	{
 	public:
 		Layer(const std::string& debugName = "Layer") : m_debugName(debugName) {};
-		virtual ~Layer() {};
+		virtual ~Layer() = default;
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
