@@ -7,6 +7,7 @@ namespace Filbert
 	class ImGuiLayer : public Layer
 	{
 	public:
+		// To-do: Figure out why OpenGL input/events don't trigger when ImGui window is outside of the main window
 		void OnAttach() override;
 		void OnDetach() override;
 		void OnUpdate(float deltaTime) override;

@@ -40,7 +40,10 @@ namespace Filbert
 	{
 		FB_PROFILE_FN();
 
-		m_cameraController.OnUpdate(deltaTime);
+		if (m_windowFocusedAndHovered)
+		{
+			m_cameraController.OnUpdate(deltaTime);
+		}
 
 		Filbert::Renderer2D::ResetStats();
 	}
@@ -80,6 +83,8 @@ namespace Filbert
 		// Viewport
 		ImGui::Begin("Viewport");
 
+		m_windowFocusedAndHovered = ImGui::IsWindowFocused() && ImGui::IsWindowHovered();
+
 		static constexpr ImVec2 upperLeft(0.0f, 1.0f);
 		static constexpr ImVec2 bottomRight(1.0f, 0.0f);
 		ImGui::Image(m_frameBuffer->GetColorAttachment(), std::bit_cast<ImVec2>(m_viewportContentRegion), upperLeft, bottomRight); // UL and BR because image is flipped vertically
@@ -101,6 +106,9 @@ namespace Filbert
 	{
 		FB_PROFILE_FN();
 
-		m_cameraController.OnEvent(event);
+		if (m_windowFocusedAndHovered)
+		{
+			m_cameraController.OnEvent(event);
+		}
 	}
 }
