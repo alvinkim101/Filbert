@@ -55,6 +55,7 @@ namespace Filbert
 		// When viewport size changes
 		ImGui::Begin("Viewport");
 
+		// To-do: Figure out why minimizing and maximizing window results in wrong image until the window is resized
 		glm::vec2 viewportContentRegion = std::bit_cast<glm::vec2>(ImGui::GetContentRegionAvail());
 		if (!(viewportContentRegion == m_viewportContentRegion))
 		{

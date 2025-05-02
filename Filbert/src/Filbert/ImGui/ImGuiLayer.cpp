@@ -68,6 +68,8 @@ namespace Filbert
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		//ImGui::ShowDemoWindow(); // Show demo window! :)
+
+		ImGui::DockSpaceOverViewport();
 	}
 
 	void ImGuiLayer::Render()
