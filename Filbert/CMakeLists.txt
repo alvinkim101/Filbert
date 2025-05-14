@@ -86,6 +86,7 @@ target_include_directories(Filbert PUBLIC vendor/imgui/imgui vendor/imgui/imgui/
 target_include_directories(Filbert PUBLIC vendor/glm)
 target_include_directories(Filbert PUBLIC vendor/stb)
 target_include_directories(Filbert PUBLIC vendor/json/include)
+target_include_directories(Filbert PUBLIC vendor/entt/single_include)
 
 target_compile_definitions(Filbert PUBLIC $<$<PLATFORM_ID:Windows>:FB_PLATFORM_WINDOWS>)
 target_compile_definitions(Filbert PUBLIC $<$<CONFIG:Debug>:FB_ASSERTS_ENABLED>)

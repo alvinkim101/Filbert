@@ -16,3 +16,6 @@
 [submodule "Filbert/vendor/json"]
 	path = Filbert/vendor/json
 	url = https://github.com/nlohmann/json.git
+[submodule "Filbert/vendor/entt"]
+	path = Filbert/vendor/entt
+	url = https://github.com/skypjack/entt.git
