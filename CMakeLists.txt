@@ -8,6 +8,5 @@ set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
 add_subdirectory(Filbert)
 add_subdirectory(Editor)
-add_subdirectory(Sandbox)
 
 set_property(DIRECTORY ${CMAKE_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Editor)
