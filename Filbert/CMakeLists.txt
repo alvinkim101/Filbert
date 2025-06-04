@@ -54,6 +54,11 @@ add_library(Filbert STATIC
 	src/Filbert/Renderer/Texture.h
 	src/Filbert/Renderer/VertexArray.cpp
 	src/Filbert/Renderer/VertexArray.h
+	src/Filbert/Scene/Components.h
+	src/Filbert/Scene/Entity.cpp
+	src/Filbert/Scene/Entity.h
+	src/Filbert/Scene/Scene.cpp
+	src/Filbert/Scene/Scene.h
 	src/Filbert/Utilities/Profiler.cpp
 	src/Filbert/Utilities/Profiler.h
 	src/Platform/OpenGL/OpenGLBuffer.cpp

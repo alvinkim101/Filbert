@@ -23,3 +23,7 @@
 
 #include <Filbert/Renderer/Renderer.h>
 #include <Filbert/Renderer/Renderer2D.h>
+
+#include <Filbert/Scene/Scene.h>
+#include <Filbert/Scene/Entity.h>
+#include <Filbert/Scene/Components.h>

@@ -19,6 +19,12 @@ namespace Filbert
 		
 		m_subTextures["Grass"] = std::make_shared<Filbert::SubTexture2D>(m_textureAtlases["City"], glm::uvec2(1, 1));
 		m_subTextures["Dirt"] = std::make_shared<Filbert::SubTexture2D>(m_textureAtlases["City"], glm::uvec2(11, 1));
+
+		// Entity component system
+		m_scene = std::make_shared<Scene>();
+
+		Entity square(m_scene);
+		square.AddComponent<ColorComponent>();
 	}
 
 	EditorLayer::~EditorLayer()
@@ -75,7 +81,7 @@ namespace Filbert
 		Filbert::RenderCommand::Clear();
 		Filbert::Renderer2D::BeginScene(m_cameraController.GetCamera());
 
-		Filbert::Renderer2D::DrawQuad({ 0.0f, 0.0f }, 0.0f, { 1.0f, 1.0f }, m_subTextures["Dirt"]);
+		m_scene->Render();
 
 		Filbert::Renderer2D::EndScene();
 		m_frameBuffer->Unbind();

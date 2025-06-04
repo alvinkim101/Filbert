@@ -25,7 +25,8 @@ namespace Filbert
 		OrthographicCameraController m_cameraController;
 
 		glm::vec2 m_viewportContentRegion{1920, 1080}; // Could use ImVec2 but want to learn about bit_cast
-
 		bool m_windowFocusedAndHovered = false;
+
+		std::shared_ptr<Scene> m_scene;
 	};
 }
