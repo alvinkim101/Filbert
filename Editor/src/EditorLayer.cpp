@@ -7,9 +7,7 @@ namespace Filbert
 	EditorLayer::EditorLayer()
 	{
 		// Framebuffer
-		Filbert::FramebufferSpec frameBufferSpec;
-		frameBufferSpec.width = m_viewportContentRegion.x;
-		frameBufferSpec.height = m_viewportContentRegion.y;
+		Filbert::FramebufferSpec frameBufferSpec{ static_cast<unsigned int>(m_viewportContentRegion.x), static_cast<unsigned int>(m_viewportContentRegion.y) };
 		m_frameBuffer = Filbert::Framebuffer::Create(frameBufferSpec);
 
 		// Textures
@@ -67,11 +65,11 @@ namespace Filbert
 		{
 			// Recreate framebuffer
 			m_viewportContentRegion = viewportContentRegion;
-			Filbert::FramebufferSpec frameBufferSpec{ m_viewportContentRegion.x, m_viewportContentRegion.y };
+			Filbert::FramebufferSpec frameBufferSpec{ static_cast<unsigned int>(m_viewportContentRegion.x), static_cast<unsigned int>(m_viewportContentRegion.y) };
 			m_frameBuffer->Recreate(frameBufferSpec);
 
 			// Change camera bounds
-			m_cameraController.ResizeWindow(m_viewportContentRegion.x, m_viewportContentRegion.y);
+			m_cameraController.ResizeWindow(static_cast<unsigned int>(m_viewportContentRegion.x), static_cast<unsigned int>(m_viewportContentRegion.y));
 		}
 
 		ImGui::End();
